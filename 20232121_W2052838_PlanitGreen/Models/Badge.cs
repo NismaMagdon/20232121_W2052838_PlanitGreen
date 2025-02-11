@@ -1,12 +1,15 @@
-﻿namespace _20232121_W2052838_PlanitGreen.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace _20232121_W2052838_PlanitGreen.Models
 {
     public class Badge
     {
-        private int BadgeID { get; set; }
-        private string BadgeName { get; set; }
-        private string BadgeDescription { get; set; }
-        private string CriteriaType { get; set; }
-        private int ThresholdValue { get; set; }
-        private string BadgeImage { get; set; }
+        [Key]
+        public int BadgeID { get; set; }
+        public string BadgeName { get; set; }
+        public string BadgeDescription { get; set; }
+        public string CriteriaType { get; set; }
+        public int ThresholdValue { get; set; }
+        public string BadgeImage { get; set; }
     }
 }

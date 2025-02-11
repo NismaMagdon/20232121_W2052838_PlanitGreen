@@ -1,22 +1,31 @@
-﻿namespace _20232121_W2052838_PlanitGreen.Models
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace _20232121_W2052838_PlanitGreen.Models
 {
     public class Tour
     {
-        private int TourID { get; set; }
-        private string TourName { get; set; }
-        private string Description { get; set; }
-        private TourStyle TourStyle { get; set; }
-        private int EcoPoints { get; set; }
-        private Destination Destination { get; set; }
-        private int Duration { get; set; }
-        private double Price { get; set; }
-        private string CarbonFootprint { get; set; }
-        private int TreesPlanted { get; set; }
-        private bool IsActive { get; set; }
-        private List<ItineraryItem> Itinerary { get; set; }
-        private List<TourImage> ImageList { get; set; }
-        private List<Review> Reviews { get; set; }
-        private List<Departure> DepartureList { get; set; }
+        [Key]
+        public int TourID { get; set; }
+        public string TourName { get; set; }
+        public string Description { get; set; }
+        public virtual TourStyle TourStyle { get; set; }
+        public int EcoPoints { get; set; }
+        public virtual Destination Destination { get; set; }
+        public int Duration { get; set; }
+        public double Price { get; set; }
+        public string CarbonFootprint { get; set; }
+        public int TreesPlanted { get; set; }
+        public bool IsActive { get; set; }
+
+        [NotMapped]
+        public List<ItineraryItem> Itinerary { get; set; } = new List<ItineraryItem>();
+        [NotMapped]
+        public List<TourImage> ImageList { get; set; } = new List<TourImage>();
+        [NotMapped]
+        public List<Review> Reviews { get; set; } = new List<Review>();
+        [NotMapped]
+        public List<Departure> DepartureList { get; set; } = new List<Departure>();
 
 
     }

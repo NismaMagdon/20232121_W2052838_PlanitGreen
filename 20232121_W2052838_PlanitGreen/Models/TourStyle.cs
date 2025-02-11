@@ -1,10 +1,16 @@
-﻿namespace _20232121_W2052838_PlanitGreen.Models
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace _20232121_W2052838_PlanitGreen.Models
 {
     public class TourStyle
     {
-        private int TourStyleID { get; set; }
-        private string TourStyleName { get; set; }
-        private string StyleDescription { get; set; }
-        private List<Tour> TourList { get; set; }
+        [Key]
+        public int TourStyleID { get; set; }
+        public string TourStyleName { get; set; }
+        public string StyleDescription { get; set; }
+
+        [NotMapped]
+        public List<Tour> TourList { get; set; } = new List<Tour>();
     }
 }

@@ -1,12 +1,15 @@
-﻿namespace _20232121_W2052838_PlanitGreen.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace _20232121_W2052838_PlanitGreen.Models
 {
     public class Passenger
     {
-        private int PassengerID { get; set; }
-        private Booking Booking { get; set; }
-        private string FirstName { get; set; }
-        private string LastName { get; set; }
-        private string MealType  { get; set; }
+        [Key]
+        public int PassengerID { get; set; }
+        public virtual Booking Booking { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string MealType  { get; set; }
 
     }
 }

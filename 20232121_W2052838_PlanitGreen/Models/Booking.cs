@@ -1,14 +1,21 @@
-﻿namespace _20232121_W2052838_PlanitGreen.Models
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace _20232121_W2052838_PlanitGreen.Models
+
 {
     public class Booking
     {
-        private int BookingID { get; set; }
-        private User User { get; set; }
-        private Departure Departure { get; set; }
-        private int PassengerQty    { get; set; }
-        private bool IsPublicTransport { get; set; }
-        private int EcoPointsUsed { get; set; }
-        private double TotalPrice { get; set; }
-        private List<Passenger> PassengerList { get; set; }
+        [Key]
+        public int BookingID { get; set; }
+        public virtual User User { get; set; }
+        public virtual Departure Departure { get; set; }
+        public int PassengerQty { get; set; }
+        public bool IsPublicTransport { get; set; }
+        public int EcoPointsUsed { get; set; }
+        public double TotalPrice { get; set; }
+        
+        [NotMapped]
+        public List<Passenger> PassengerList { get; set; } = new List<Passenger>();
     }
 }

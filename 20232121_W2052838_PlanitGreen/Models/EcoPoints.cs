@@ -1,10 +1,13 @@
-﻿namespace _20232121_W2052838_PlanitGreen.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace _20232121_W2052838_PlanitGreen.Models
 {
     public class EcoPoints
     {
-        private int PointsID {  get; set; }
-        private User User { get; set; }
-        private int TotalPoints { get; set; }
-        private int AvailablePoints { get; set; }
+        [Key]
+        public int PointsID {  get; set; }
+        public virtual User User { get; set; }
+        public int TotalPoints { get; set; }
+        public int AvailablePoints { get; set; }
     }
 }

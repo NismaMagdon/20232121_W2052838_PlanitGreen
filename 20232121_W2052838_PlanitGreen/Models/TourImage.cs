@@ -1,9 +1,12 @@
-﻿namespace _20232121_W2052838_PlanitGreen.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace _20232121_W2052838_PlanitGreen.Models
 {
     public class TourImage
     {
-        private int ImageID { get; set; }
-        private Tour Tour { get; set; }
-        private string Path { get; set; }
+        [Key]
+        public int ImageID { get; set; }
+        public virtual Tour Tour { get; set; }
+        public string Path { get; set; }
     }
 }
