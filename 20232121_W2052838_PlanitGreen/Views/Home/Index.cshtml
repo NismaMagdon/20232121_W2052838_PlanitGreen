@@ -2,7 +2,18 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@section Scripts{
+    <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
+}
+    
+ <div class="container">
+<div class="home-container">
+    <h1>Redefine travel with rewards that matter</h1><br></br>
+
+    <div class="home-search-bar">
+        <input type="text" id="search-bar" class="search-bar" placeholder="Find your next green adventure...">
+        <button id="search-btn" class="search-btn">Search</button>
+
+    </div>
 </div>
+

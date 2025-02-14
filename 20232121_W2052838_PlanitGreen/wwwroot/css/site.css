@@ -1,22 +1,154 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+/* General Header Styling */
+.header {
+    display: flex;
+    align-items: stretch;
+    background-color: #FFFFFF;
+    border-bottom: 2px solid #ccc;
+    height: auto; /* Let the header height be flexible */
+    flex-wrap: wrap; /* Allow sections to wrap */
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+/* Logo Container */
+.logo-container {
+    flex: 0 0 140px; /* Set a fixed width for logo container (adjust as needed) */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0; /* Remove any padding */
+    height: calc(40px + 60px + 40px); /* Sum of heights of the 3 sections */
+    overflow: hidden; /* Prevent image overflow */
+    background-color: #FFFFFF;
 }
 
-html {
-  position: relative;
-  min-height: 100%;
+.logo-container img {
+    height: 135px; /* Make the image fill the full height of the container */
+    width: 105px; /* Stretch the image to cover the width of the container */
+    object-fit: cover; /* Cover the entire container */
+}
+/* Header Bar for Sections */
+.header-bar {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    margin-left: 20px; /* Push sections to the right */
+}
+
+
+/* Top Section (Right-Aligned Buttons) */
+.header-bar-top {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    height:40px; /* Set height of top section */
+}
+
+.header-btn {
+    display: flex; /* Make the button content flexible */
+    align-items: center; /* Vertically center the icon and text */
+    background-color: transparent;
+    border: none;
+    margin-left: 25px;
+    cursor: pointer;
+    color: #333;
+    font-weight: bold;
+    color: #45CA31;
+}
+
+    .header-btn:hover {
+        color: #35a624; /* Green hover effect */
+    }
+
+    /* Style for icons in header buttons */
+    .header-btn .icon {
+        width: 20px; 
+        height: 20px;
+        margin-right: 8px; /* Space between icon and text */
+        vertical-align: middle; /* Align icons vertically with text */
+    }
+
+/* Middle Section  */
+.header-bar-middle {
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    height: 60px;
+    margin-left: 800px;
+}
+
+.search-bar {
+    width: 300px;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+   
+}
+
+.search-btn {
+    background-color: #45CA31; 
+    color: white; 
+    font-weight: bold;
+    padding: 8px 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 20px;
+    margin-left: 10px;
+}
+
+    .search-btn:hover {
+        background-color: #35a624;
+    }
+
+
+/* Bottom Section (Navigation Buttons) */
+.header-bar-bottom {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #0A504C;
+    height: 40px; /* Set height of bottom section */
+}
+
+.nav-btn {
+    background-color: transparent;
+    border: none;
+    margin-right: 20px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    color: #ffffff;
+    font-weight: bold;
+    margin-left: 20px;
+}
+
+    .nav-btn:hover {
+        color: #45CA31;
+    }
+
+/* Dropdown Placeholder (for future dropdowns) */
+.dropdown {
+    position: relative;
 }
 
 body {
-  margin-bottom: 60px;
+    margin: 0; /* Reset margin for body */
+}
+
+/* Add space below the header (ensure no overlap) */
+main {
+    margin-top: 80px; /* Ensure space for header height */
+}
+
+/* Focus Styling for Buttons */
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+footer {
+    margin-top: 20px; /* Ensure footer isn't overlapping */
 }

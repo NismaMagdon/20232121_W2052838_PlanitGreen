@@ -1,0 +1,27 @@
+﻿body {
+    background: url(/Images/Home/Home-image.jpeg) no-repeat center;
+    background-size: cover;
+}
+
+h1 {
+    color: #ffffff;
+    font-size: 60px;
+    margin-right:400px;
+    font-weight: bold;
+}
+.home-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    height: 60vh;
+
+}
+
+.container {
+    background-color: transparent !important;
+}
+
+.footer{
+    color: #ffffff;
+    margin-left:10px;
+}
