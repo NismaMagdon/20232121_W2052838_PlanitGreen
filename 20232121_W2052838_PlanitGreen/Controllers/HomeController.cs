@@ -18,7 +18,12 @@ namespace _20232121_W2052838_PlanitGreen.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult About()
+        {
+            return View();
+        }
+
+        public IActionResult Rewards()
         {
             return View();
         }

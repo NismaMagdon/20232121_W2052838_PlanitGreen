@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "Login Page";
+}
+
+@section Scripts {
+    <link rel="stylesheet" href="~/css/login-registration.css" asp-append-version="true" />
+}
+
+<div class="loginRegister-container">
+    <h2>Welcome back to PlanitGreen</h2>
+
+    <form asp-controller="Account" asp-action="Login" method="post" class="loginRegister-form">
+        <div class="form-input">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="Username" class="form-control" required>
+        </div>
+        <div class="form-input">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="Password" class="form-control" required>
+        </div>
+
+        <button type="submit" class="search-submit-btn">Login</button>
+        <p class="loginRegister-link">
+            Don't have an account? <a asp-controller="Account" asp-action="Register">Register here</a>
+        </p>
+    </form>
+</div>

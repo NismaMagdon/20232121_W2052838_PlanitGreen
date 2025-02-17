@@ -1,6 +1,5 @@
 html {
-    font-size: 14px;
-    position: relative;
+    font-size: 16px;
     min-height: 100%;
 }
 
@@ -10,33 +9,33 @@ html {
     align-items: stretch;
     background-color: #FFFFFF;
     border-bottom: 2px solid #ccc;
-    height: auto; /* Let the header height be flexible */
-    flex-wrap: wrap; /* Allow sections to wrap */
+    height: auto; 
+    flex-wrap: wrap;
 }
 
 /* Logo Container */
 .logo-container {
-    flex: 0 0 140px; /* Set a fixed width for logo container (adjust as needed) */
+    flex: 0 0 140px; 
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0; /* Remove any padding */
+    padding: 0; 
     height: calc(40px + 60px + 40px); /* Sum of heights of the 3 sections */
-    overflow: hidden; /* Prevent image overflow */
+    overflow: hidden;
     background-color: #FFFFFF;
 }
 
 .logo-container img {
-    height: 135px; /* Make the image fill the full height of the container */
-    width: 105px; /* Stretch the image to cover the width of the container */
-    object-fit: cover; /* Cover the entire container */
+    height: 135px; 
+    width: 105px; 
+    object-fit: cover; 
 }
 /* Header Bar for Sections */
 .header-bar {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    margin-left: 20px; /* Push sections to the right */
+    margin-left: 20px; 
 }
 
 
@@ -50,8 +49,8 @@ html {
 }
 
 .header-btn {
-    display: flex; /* Make the button content flexible */
-    align-items: center; /* Vertically center the icon and text */
+    display: flex; 
+    align-items: center; 
     background-color: transparent;
     border: none;
     margin-left: 25px;
@@ -59,19 +58,20 @@ html {
     color: #333;
     font-weight: bold;
     color: #45CA31;
+    text-decoration: none;
 }
 
-    .header-btn:hover {
-        color: #35a624; /* Green hover effect */
-    }
+.header-btn:hover {
+    color: #35a624; 
+}
 
-    /* Style for icons in header buttons */
-    .header-btn .icon {
-        width: 20px; 
-        height: 20px;
-        margin-right: 8px; /* Space between icon and text */
-        vertical-align: middle; /* Align icons vertically with text */
-    }
+/* Style for icons in header buttons */
+.header-btn .icon {
+    width: 20px; 
+    height: 20px;
+    margin-right: 8px; 
+    vertical-align: middle; 
+}
 
 /* Middle Section  */
 .header-bar-middle {
@@ -79,7 +79,7 @@ html {
     align-items: center;
     background-color: transparent;
     height: 60px;
-    margin-left: 800px;
+    margin-left: 770px;
 }
 
 .search-bar {
@@ -90,7 +90,8 @@ html {
    
 }
 
-.search-btn {
+
+.search-submit-btn {
     background-color: #45CA31; 
     color: white; 
     font-weight: bold;
@@ -98,12 +99,12 @@ html {
     cursor: pointer;
     border: none;
     border-radius: 20px;
-    margin-left: 10px;
+    
 }
 
-    .search-btn:hover {
-        background-color: #35a624;
-    }
+.search-submit-btn:hover {
+    background-color: #35a624;
+}
 
 
 /* Bottom Section (Navigation Buttons) */
@@ -112,7 +113,7 @@ html {
     align-items: center;
     padding: 10px 20px;
     background-color: #0A504C;
-    height: 40px; /* Set height of bottom section */
+    height: 40px; 
 }
 
 .nav-btn {
@@ -124,11 +125,12 @@ html {
     color: #ffffff;
     font-weight: bold;
     margin-left: 20px;
+    text-decoration: none;
 }
 
-    .nav-btn:hover {
-        color: #45CA31;
-    }
+.nav-btn:hover {
+    color: #45CA31;
+}
 
 /* Dropdown Placeholder (for future dropdowns) */
 .dropdown {
@@ -136,12 +138,13 @@ html {
 }
 
 body {
-    margin: 0; /* Reset margin for body */
+    margin: 0;
+    padding: 0;
 }
 
 /* Add space below the header (ensure no overlap) */
 main {
-    margin-top: 80px; /* Ensure space for header height */
+    margin-top: 50px; /* Ensure space for header height */
 }
 
 /* Focus Styling for Buttons */
@@ -150,5 +153,5 @@ main {
 }
 
 footer {
-    margin-top: 20px; /* Ensure footer isn't overlapping */
+    margin-top: 50px; /* Ensure footer isn't overlapping */
 }
