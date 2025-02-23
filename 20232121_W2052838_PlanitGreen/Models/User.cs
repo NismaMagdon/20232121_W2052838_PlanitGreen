@@ -9,11 +9,10 @@ namespace _20232121_W2052838_PlanitGreen.Models
         public int UserID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public DateOnly Dob { get; set; }
-        public string Email { get; set; }
+        public DateTime Dob { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
-        public Role Role { get; set; }
+        public Role Role { get; set; } = Role.Traveller;
 
         [NotMapped]
         public List<WishlistItem> Wishlist { get; set; } = new List<WishlistItem>();

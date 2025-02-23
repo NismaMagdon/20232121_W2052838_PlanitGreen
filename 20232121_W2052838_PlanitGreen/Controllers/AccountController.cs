@@ -1,18 +1,67 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using _20232121_W2052838_PlanitGreen.Managers;
+using _20232121_W2052838_PlanitGreen.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 
 namespace _20232121_W2052838_PlanitGreen.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly UserManager userManager;
+        private readonly Authenticator authenticator;
 
+        public AccountController(UserManager userManager, Authenticator authenticator)
+        {
+            this.userManager = userManager;
+            this.authenticator = authenticator;
+        }
+        
+        //GET: Login page
         public IActionResult Login()
         {
             return View();
         }
 
+        //POST: Handle login
+        [HttpPost]
+        public IActionResult Login(string username, string password)
+        {
+            var user = authenticator.AuthenticateUser(username, password);
+
+            if (user == null) {
+                ViewData["ErrorMessage"] = "Invalid username or password."; //CHECK
+                return View();
+            }
+
+            // Redirect to home page after successful login - CHECK AGAIN
+            return RedirectToAction("Index", "Home");
+        }
+
+        //GET: Register page
         public IActionResult Register()
         {
             return View();
+        }
+
+        //POST: Handle registration
+        [HttpPost]
+        public IActionResult Register(User user)
+        {
+            //Check if the username is taken
+            if (authenticator.IsUsernameTaken(user.Username))
+            {
+                ViewData["ErrorMessage"] = "Username is already taken.";
+                return View();
+            }
+
+            user.Role = Role.Traveller;
+
+            // Register the user using UserManager
+            userManager.RegisterUser(user);
+
+            // After successful registration, redirect to Login page
+            return RedirectToAction("Login");
+
         }
     }
 }

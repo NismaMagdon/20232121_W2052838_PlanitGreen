@@ -1,4 +1,5 @@
 using _20232121_W2052838_PlanitGreen.Data;
+using _20232121_W2052838_PlanitGreen.Managers;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +8,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("PlanitGreenConnection")));
+
+// Register UserManager and Authenticator services
+builder.Services.AddScoped<UserManager>();
+builder.Services.AddScoped<Authenticator>();
+
 
 var app = builder.Build();
 
