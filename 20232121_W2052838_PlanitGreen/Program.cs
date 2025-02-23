@@ -13,6 +13,14 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
 builder.Services.AddScoped<UserManager>();
 builder.Services.AddScoped<Authenticator>();
 
+// Add session services
+builder.Services.AddDistributedMemoryCache(); // Required for session state
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Set timeout duration
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 
 var app = builder.Build();
 
@@ -27,6 +35,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+app.UseSession();
 app.UseRouting();
 
 app.UseAuthorization();

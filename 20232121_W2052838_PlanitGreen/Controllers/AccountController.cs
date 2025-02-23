@@ -33,7 +33,16 @@ namespace _20232121_W2052838_PlanitGreen.Controllers
                 return View();
             }
 
+            // Store the user ID in session to track login status
+            HttpContext.Session.SetInt32("UserID", user.UserID);
+
             // Redirect to home page after successful login - CHECK AGAIN
+            return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Remove("UserID"); // Clear session
             return RedirectToAction("Index", "Home");
         }
 
