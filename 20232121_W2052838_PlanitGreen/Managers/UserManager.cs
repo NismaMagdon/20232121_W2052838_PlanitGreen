@@ -17,17 +17,16 @@ namespace _20232121_W2052838_PlanitGreen.Managers
             _context.User.Add(user);
             _context.SaveChanges();
 
-            // Now create a related EcoPoints instance with default 0 points
             var ecoPoints = new EcoPoints
             {
-                User = user,  
-                TotalPoints = 0,      
-                AvailablePoints = 0    
+                User = user,
+                TotalPoints = 0,
+                AvailablePoints = 0
             };
 
-            // Add EcoPoints to the database
+            // Add and save EcoPoints to the database
             _context.EcoPoints.Add(ecoPoints);
-            _context.SaveChanges();  // Save EcoPoints to the database
+            _context.SaveChanges();
         }
     }
 }

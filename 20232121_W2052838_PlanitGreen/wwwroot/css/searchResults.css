@@ -1,0 +1,44 @@
+﻿.search-results-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    margin-left: 30px;
+}
+
+.filters-container {
+    width: 250px; 
+    background: #f8f8f8;
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.filters-container label {
+    font-weight: bold;
+}
+
+.filters-container select,
+.filters-container input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.price-container input {
+    display: inline-block;
+    width: 40%; 
+    padding: 8px;
+    margin-right: 18.8px; 
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.trip-results {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}

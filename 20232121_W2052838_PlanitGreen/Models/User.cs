@@ -14,9 +14,12 @@ namespace _20232121_W2052838_PlanitGreen.Models
         public string Password { get; set; }
         public Role Role { get; set; } = Role.Traveller;
 
+    
+
         [NotMapped]
         public List<WishlistItem> Wishlist { get; set; } = new List<WishlistItem>();
         [NotMapped]
         public List<UserBadge> UserBadge { get; set; } = new List<UserBadge>();
+
     }
 }

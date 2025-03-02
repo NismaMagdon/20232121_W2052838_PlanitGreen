@@ -9,6 +9,11 @@
 <div class="loginRegister-container">
     <h2>Register now!</h2>
 
+    @if (ViewData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger" style="margin-bottom: 15px;">@ViewData["ErrorMessage"]</div>
+    }
+
     <form asp-controller="Account" asp-action="Register" method="post" class="loginRegister-form">
         <div class="form-input">
             <label for="firstName">First Name:</label>

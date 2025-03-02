@@ -36,10 +36,12 @@
                    
                 </div>
 
+                <form asp-controller="Search" asp-action="SearchResults" method="get">
                 <div id="header-bar-middle" class="header-bar-middle">
-                    <input type="text" id="search-bar" class="search-bar" placeholder="Find your next green adventure...">
+                    <input type="text" name="searchQuery" id="search-bar" class="search-bar" placeholder="Find your next green adventure...">
                     <button id="search-btn" class="search-submit-btn" style="margin-left: 10px;">Search</button>
                 </div>
+                </form>
 
                 <div id="header-bar-bottom" class="header-bar-bottom">
                     <a class="nav-btn" asp-controller="Home" asp-action="Index">Home</a>

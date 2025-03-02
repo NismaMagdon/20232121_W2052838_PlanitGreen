@@ -9,7 +9,13 @@
 <div class="loginRegister-container">
     <h2>Welcome back to PlanitGreen</h2>
 
+    @if (ViewData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger" style="margin-bottom: 15px;">@ViewData["ErrorMessage"]</div>
+    }
+
     <form asp-controller="Account" asp-action="Login" method="post" class="loginRegister-form">
+
         <div class="form-input">
             <label for="username">Username:</label>
             <input type="text" id="username" name="Username" class="form-control" required>
@@ -25,3 +31,5 @@
         </p>
     </form>
 </div>
+
+

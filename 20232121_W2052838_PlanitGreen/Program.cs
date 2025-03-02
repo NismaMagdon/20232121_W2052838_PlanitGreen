@@ -9,9 +9,10 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("PlanitGreenConnection")));
 
-// Register UserManager and Authenticator services
+// Register services
 builder.Services.AddScoped<UserManager>();
 builder.Services.AddScoped<Authenticator>();
+builder.Services.AddScoped<SearchManager>();
 
 // Add session services
 builder.Services.AddDistributedMemoryCache(); // Required for session state

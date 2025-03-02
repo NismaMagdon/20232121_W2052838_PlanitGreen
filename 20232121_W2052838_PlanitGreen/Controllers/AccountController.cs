@@ -59,7 +59,7 @@ namespace _20232121_W2052838_PlanitGreen.Controllers
             //Check if the username is taken
             if (authenticator.IsUsernameTaken(user.Username))
             {
-                ViewData["ErrorMessage"] = "Username is already taken.";
+                ViewData["ErrorMessage"] = "This username already exists.";
                 return View();
             }
 

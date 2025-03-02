@@ -155,3 +155,9 @@ main {
 footer {
     margin-top: 50px; /* Ensure footer isn't overlapping */
 }
+
+.validation-error{
+    font-size: 15px;
+    color: red;
+    font-weight: bold;
+}
