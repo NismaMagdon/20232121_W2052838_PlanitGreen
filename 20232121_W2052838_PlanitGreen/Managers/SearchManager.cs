@@ -29,6 +29,7 @@ namespace _20232121_W2052838_PlanitGreen.Managers
             if (!string.IsNullOrEmpty(searchQuery))
             {
                 tours = tours.Where(tour => tour.TourName.Contains(searchQuery) ||
+                                            tour.Description.Contains(searchQuery) ||
                                              tour.TourStyle.TourStyleName.Contains(searchQuery) ||
                                              tour.Destination.DestinationName.Contains(searchQuery));
             }
@@ -40,8 +41,8 @@ namespace _20232121_W2052838_PlanitGreen.Managers
             // Associate the first image with each tour (or any logic you need for selecting images)
             foreach (var tour in tours)
             {
-                // Get the first image for this tour (or adjust logic as needed)
-                var firstImage = tourImages.FirstOrDefault(img => img.Tour.TourID == tour.TourID);
+                // Get the first image for this tour
+                var firstImage = tourImages.FirstOrDefault(img => img.Tour != null && img.Tour.TourID == tour.TourID);
                 if (firstImage != null)
                 {
                     // You can directly add the image path to a property in your view model if needed

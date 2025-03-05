@@ -2,12 +2,26 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    width: 100%;
+    max-width: 100%;
     margin-left: 30px;
 }
 
+.search-bar-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; 
+    margin-left: 10px; 
+}
+
+.filters-and-results {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
 .filters-container {
-    width: 250px; 
+    width: 250px;
     background: #f8f8f8;
     padding: 20px;
     border-radius: 10px;
@@ -38,7 +52,70 @@
 }
 
 .trip-results {
+    flex-grow: 1;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 20px;
+    max-width: 1200px;
+    margin-top: 20px;
+}
+
+.tour-card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.2s ease-in-out;
+    display: flex;
+    flex-direction: column;
+}
+
+.tour-card:hover {
+    transform: translateY(-5px);
+}
+
+.tour-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.high-eco {
+    color: green;
+    font-weight: bold;
+}
+
+.low-eco {
+    color: orange;
+    font-weight: bold;
+}
+
+
+#wishlist-btn {
+    background: none;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin-top: auto;
+    border-top: 1px solid #eee;
+}
+
+#wishlist-btn:hover {
+    color: #0056b3;
+}
+
+.icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+}
+
+@media (max-width: 768px) {
+    .trip-results {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
 }

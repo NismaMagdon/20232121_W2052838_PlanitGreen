@@ -14,6 +14,7 @@
 		</div>
 	</form>
 
+    <div class="filters-and-results">
     <div class="filters-container">
         <form method="post" asp-controller="Search" asp-action="FilterAndSort">
             <input type="hidden" name="searchQuery" value="@ViewData["SearchQuery"]" /> <!-- Persist search query -->
@@ -46,7 +47,7 @@
                 <option value="leisure">Leisure</option>
             </select>
 
-            <button type="submit">Apply Filters</button>
+            <button type="submit" class="search-submit-btn" style="margin-top: 15px;">Apply Filters</button>
         </form>
     </div>
 
@@ -60,11 +61,21 @@
                     {
                         <img src="@Url.Content(tour.ImageList.First().Path)" alt="Tour Image" class="tour-image">
                     }
-                    <h3>@tour.TourName</h3>
-                    <p>@tour.TourStyle.TourStyleName</p>
-                    <p>@tour.Duration days</p>
-                    <p>@tour.EcoPoints Eco Points</p>
-                    <p>USD $ @tour.Price</p>
+                    <div style="padding: 15px; display: flex; flex-direction: column; gap: 5px;">
+                        <h3 style="font-size: 1.2rem; font-weight: bold; margin: 0;">@tour.TourName</h3>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+                            <p style="color: #777; font-size: 0.9rem; margin: 0;">@tour.TourStyle.TourStyleName</p>
+                            <span style="color: #ccc;">|</span> <!-- Separator -->
+                            <p style="color: #777; font-size: 0.9rem; margin: 0;">@tour.Duration days</p>
+                        </div>
+                            <p class="eco-points @(tour.EcoPoints >= 200 ? "high-eco" : "low-eco")">
+                                @tour.EcoPoints Eco Points
+                            </p>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div></div> <!-- Empty div to push price to the right -->
+                            <p style="color: black; font-weight: bold; font-size: 1rem; margin: 5px 0;">USD $ @tour.Price</p>
+                        </div>
+                    </div>
 
                     <button id="wishlist-btn"><img src="~/Images/Header/Wishlist-icon.png" alt="AddWishlist" class="icon">Add to my wishlist</button>
                 </div>
@@ -74,6 +85,7 @@
         {
             <p>No tours found matching your search criteria.</p>
         }
+    </div>
     </div>
     
 		
