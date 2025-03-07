@@ -1,0 +1,117 @@
+﻿@model _20232121_W2052838_PlanitGreen.Models.Tour
+@{
+	ViewData["Title"] = "Tour Details";
+}
+@section Scripts {
+	<link rel="stylesheet" href="~/css/tourDetails.css" asp-append-version="true" />
+
+	<script>
+		function scrollToDepartures() {
+			const departuresSection = document.getElementById("departures-section");
+			if (departuresSection) {
+				departuresSection.scrollIntoView({ behavior: "smooth", block: "start" });
+			}
+		}
+	</script>
+}
+
+
+	<div class="tour-header">
+		<h2 style="color: #01635E;">@Model.TourName</h2>
+		<p>@Model.TourStyle.TourStyleName | @Model.Duration days</p>
+	</div>
+	
+	<div class="tour-details">
+		<div class="left-section">
+
+			<img src="@Url.Content(Model.ImageList.FirstOrDefault()?.Path)" alt="@Model.TourName" class="main-img">
+
+
+			<div class="gallery">
+				@foreach (var img in Model.ImageList.Skip(1))
+				{
+					<img src="@Url.Content(img.Path)" alt="Tour Image">
+				}
+			</div>
+
+			<div class="green-metrics">
+				<h4>Green Metrics</h4><br>
+				<p>Carbon footprint:<br>🌱 @Model.CarbonFootprint</p>
+				@if (@Model.TreesPlanted > 1){
+					<p>Carbon offset:<br>🌳 @Model.TreesPlanted trees planted per traveller</p>
+				}
+				else{
+				<p>Carbon offset:<br>🌳 @Model.TreesPlanted tree planted per traveller</p>
+				}
+				
+			</div>
+
+		</div>
+
+		<div class="middle-section">
+		<p style="text-align: justify;">@Model.Description</p>
+
+		<div class="itinerary">
+			<h4 style="color: #01635E; margin-bottom: 15px; text-align: center;">
+				Itinerary
+			</h4>
+			<table>
+				<thead>
+					<tr>
+						<th style="color: #01635E;">Day</th>
+						<th style="color: #01635E;">Activity</th>
+						<th style="color: #01635E;">Location</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var item in Model.Itinerary)
+					{
+						<tr>
+							<td style="width: 15%;">Day @item.Day</td>
+							<td>@item.Description</td>
+							<td>@item.Location</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+
+		<div id="departures-section" class="departures">
+			<h4 style="color: #01635E; margin-bottom: 15px; text-align: center;">Available Departures</h4>
+			<table>
+				<thead>
+					<tr>
+						<th style="color: #01635E;">Start Date</th>
+						<th style="color: #01635E;">End Date</th>
+						<th style="color: #01635E; text-align:center">Available Packs</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var departure in Model.DepartureList.Where(d => !d.Iscancelled && d.StartDate > DateOnly.FromDateTime(DateTime.Today)))
+					{
+						<tr>
+							<td>@departure.StartDate.ToString("yyyy-MM-dd")</td>
+							<td>@departure.EndDate.ToString("yyyy-MM-dd")</td>
+							<td>@(departure.PacksLimit - departure.PacksQty)</td>
+							<td>
+								<button class="search-submit-btn" >Book Now</button>
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+		</div>
+
+		<div class="right-section">
+			<div class="reward-price">
+				<span class="eco-points @(Model.EcoPoints >= 200 ? "high-eco" : "low-eco")">@Model.EcoPoints Eco Points</span>
+				<span style="font-weight: bold;">USD $ @Model.Price</span>
+			</div>
+
+			<button id="wishlist-btn"><img src="~/Images/Header/Wishlist-icon.png" alt="AddWishlist" class="icon">Add to my wishlist</button>
+		<button class="search-submit-btn" onclick="scrollToDepartures()">View dates and book</button>
+		</div>
+	</div>
+

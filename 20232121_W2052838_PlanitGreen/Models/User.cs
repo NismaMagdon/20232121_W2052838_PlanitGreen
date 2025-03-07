@@ -16,9 +16,9 @@ namespace _20232121_W2052838_PlanitGreen.Models
 
     
 
-        [NotMapped]
+        
         public List<WishlistItem> Wishlist { get; set; } = new List<WishlistItem>();
-        [NotMapped]
+        
         public List<UserBadge> UserBadge { get; set; } = new List<UserBadge>();
 
     }

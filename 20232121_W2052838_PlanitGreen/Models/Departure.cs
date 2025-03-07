@@ -14,7 +14,7 @@ namespace _20232121_W2052838_PlanitGreen.Models
         public int PacksQty { get; set; }
         public bool Iscancelled { get; set; }
 
-        [NotMapped]
+        
         public List<Booking> BookingList { get; set; } = new List<Booking>();
 
 

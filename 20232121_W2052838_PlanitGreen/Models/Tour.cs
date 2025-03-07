@@ -18,13 +18,13 @@ namespace _20232121_W2052838_PlanitGreen.Models
         public int TreesPlanted { get; set; }
         public bool IsActive { get; set; }
 
-        [NotMapped]
+        
         public List<ItineraryItem> Itinerary { get; set; } = new List<ItineraryItem>();
-        [NotMapped]
+        
         public List<TourImage> ImageList { get; set; } = new List<TourImage>();
-        [NotMapped]
+        
         public List<Review> Reviews { get; set; } = new List<Review>();
-        [NotMapped]
+        
         public List<Departure> DepartureList { get; set; } = new List<Departure>();
 
 

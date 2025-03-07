@@ -57,6 +57,7 @@
             @foreach (var tour in Model)
             {
                 <div class="tour-card">
+                    <a asp-controller="Tour" asp-action="Details" asp-route-id="@tour.TourID">
                     @if (tour.ImageList != null && tour.ImageList.Any())
                     {
                         <img src="@Url.Content(tour.ImageList.First().Path)" alt="Tour Image" class="tour-image">
@@ -76,6 +77,7 @@
                             <p style="color: black; font-weight: bold; font-size: 1rem; margin: 5px 0;">USD $ @tour.Price</p>
                         </div>
                     </div>
+                    </a>
 
                     <button id="wishlist-btn"><img src="~/Images/Header/Wishlist-icon.png" alt="AddWishlist" class="icon">Add to my wishlist</button>
                 </div>
