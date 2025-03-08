@@ -36,7 +36,7 @@
 
 			<div class="green-metrics">
 				<h4>Green Metrics</h4><br>
-				<p>Carbon footprint:<br>🌱 @Model.CarbonFootprint</p>
+				<p>Carbon footprint:<br>🌱 @Model.CarbonFootprint kg of CO2-e</p>
 				@if (@Model.TreesPlanted > 1){
 					<p>Carbon offset:<br>🌳 @Model.TreesPlanted trees planted per traveller</p>
 				}
@@ -106,7 +106,7 @@
 
 		<div class="right-section">
 			<div class="reward-price">
-				<span class="eco-points @(Model.EcoPoints >= 200 ? "high-eco" : "low-eco")">@Model.EcoPoints Eco Points</span>
+				<span class="eco-points @(Model.CalculateEcoPoints() >= 170 ? "high-eco" : "low-eco")">@Model.EcoPoints Eco Points</span>
 				<span style="font-weight: bold;">USD $ @Model.Price</span>
 			</div>
 

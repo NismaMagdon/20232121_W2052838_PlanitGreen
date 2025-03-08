@@ -69,8 +69,8 @@
                             <span style="color: #ccc;">|</span> <!-- Separator -->
                             <p style="color: #777; font-size: 0.9rem; margin: 0;">@tour.Duration days</p>
                         </div>
-                            <p class="eco-points @(tour.EcoPoints >= 200 ? "high-eco" : "low-eco")">
-                                @tour.EcoPoints Eco Points
+                            <p class="eco-points @(tour.CalculateEcoPoints() >= 170 ? "high-eco" : "low-eco")">
+                                @tour.CalculateEcoPoints() Eco Points
                             </p>
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <div></div> <!-- Empty div to push price to the right -->
