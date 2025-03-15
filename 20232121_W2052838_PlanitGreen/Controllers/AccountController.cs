@@ -36,6 +36,16 @@ namespace _20232121_W2052838_PlanitGreen.Controllers
             // Store the user ID in session to track login status
             HttpContext.Session.SetInt32("UserID", user.UserID);
 
+            // Check if a return URL exists in session
+            string? returnUrl = HttpContext.Session.GetString("ReturnUrl");
+
+            if (!string.IsNullOrEmpty(returnUrl))
+            {
+                // Clear session variable and redirect to intended page
+                HttpContext.Session.Remove("ReturnUrl");
+                return Redirect(returnUrl);
+            }
+
             // Redirect to home page after successful login - CHECK AGAIN
             return RedirectToAction("Index", "Home");
         }

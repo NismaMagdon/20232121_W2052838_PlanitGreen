@@ -16,10 +16,7 @@
 }
 
 
-	<div class="tour-header">
-		<h2 style="color: #01635E;">@Model.TourName</h2>
-		<p>@Model.TourStyle.TourStyleName | @Model.Duration days</p>
-	</div>
+	
 	
 	<div class="tour-details">
 		<div class="left-section">
@@ -49,6 +46,11 @@
 		</div>
 
 		<div class="middle-section">
+
+		<div class="tour-header">
+			<h2 style="color: #01635E;">@Model.TourName</h2>
+			<p>@Model.TourStyle.TourStyleName | @Model.Duration days</p>
+		</div>
 		<p style="text-align: justify;">@Model.Description</p>
 
 		<div class="itinerary">
@@ -88,20 +90,49 @@
 					</tr>
 				</thead>
 				<tbody>
-					@foreach (var departure in Model.DepartureList.Where(d => !d.Iscancelled && d.StartDate > DateOnly.FromDateTime(DateTime.Today)))
+					@foreach (var departure in Model.DepartureList.Where(d => !d.Iscancelled && d.StartDate > DateOnly.FromDateTime(DateTime.Today) && (d.PacksQty < d.PacksLimit)))
 					{
 						<tr>
 							<td>@departure.StartDate.ToString("yyyy-MM-dd")</td>
 							<td>@departure.EndDate.ToString("yyyy-MM-dd")</td>
 							<td>@(departure.PacksLimit - departure.PacksQty)</td>
 							<td>
-								<button class="search-submit-btn" >Book Now</button>
+								<form method="get" action="@Url.Action("Book", "Booking")">
+									<input type="hidden" name="departureId" value="@departure.DepartureID" />
+									<button type="submit" class="search-submit-btn">Book Now</button>
+								</form>
 							</td>
 						</tr>
 					}
 				</tbody>
 			</table>
 		</div>
+
+		<div id="reviews-section" class="reviews">
+			<h4 style="color: #01635E; margin-bottom: 15px; margin-top: 20px; text-align: center;">Reviews</h4>
+
+			<!-- Add a new review form -->
+			<div class="add-review">
+				<h6 style="color: #01635E">Add a Review</h6>
+				<form>
+					<textarea name="Content" placeholder="Write your review here..." required></textarea>
+					<button type="submit" class="search-submit-btn">Submit Review</button>
+				</form>
+			</div>
+
+			<!-- Display existing reviews -->
+			@foreach (var review in Model.Reviews.OrderByDescending(r => r.CreatedAt))
+			{
+				<div class="review">
+					<p><strong>@review.User.Username</strong> - @review.CreatedAt.ToString("yyyy-MM-dd")</p>
+					<p>@review.Content</p>
+				</div>
+			}
+
+			
+		</div>
+
+
 		</div>
 
 		<div class="right-section">
