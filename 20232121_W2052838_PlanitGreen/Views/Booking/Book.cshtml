@@ -1,5 +1,198 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model _20232121_W2052838_PlanitGreen.Models.Departure
 @{
+    ViewData["Title"] = "Book Your Tour";
+    int availablePoints = ViewBag.AvailablePoints ?? 0;
+ 
 }
+
+@section Scripts{
+
+    <link rel="stylesheet" href="~/css/book.css" asp-append-version="true" />
+
+    <script>
+        let pricePerPerson = @Model.Tour.Price;
+        let packsLimit = @Model.PacksLimit;
+        let packsQty = @Model.PacksQty;
+        let maxTravellers = packsLimit - packsQty;
+        let availablePoints = @availablePoints;
+        let ecoPointsMultiplier = 1;
+
+
+        function populateTravellerDropdown() {
+            let dropdown = document.getElementById("travellers");
+            dropdown.innerHTML = ""; // Clear existing options
+
+            // Add a blank default option
+            let defaultOption = document.createElement("option");
+            defaultOption.value = "";
+            defaultOption.textContent = "Select";
+            defaultOption.disabled = true;
+            defaultOption.selected = true;
+            dropdown.appendChild(defaultOption);
+
+            for (let i = 1; i <= maxTravellers; i++) {
+                let option = document.createElement("option");
+                option.value = i;
+                option.textContent = i;
+                dropdown.appendChild(option);
+            }
+        }
+
+        function updateBookingSummary() {
+            let travellersDropdown = document.getElementById("travellers");
+            let numTravellers = parseInt(travellersDropdown.value) || 1; // Default to 1 if no selection is made
+
+            let redeemPoints = parseInt(document.getElementById("redeem-points").value) || 0;
+
+            if (redeemPoints > availablePoints) {
+                redeemPoints = availablePoints;
+                document.getElementById("redeem-points").value = redeemPoints; // Reset input value
+            }
+
+            let totalPrice = pricePerPerson * numTravellers;
+            let discount = redeemPoints / 10;
+            let finalPrice = totalPrice - discount;
+
+            // Ensure final price doesn't go negative
+            if (finalPrice < 0) {
+                finalPrice = 0;
+            }
+
+            // Calculate number of trees and eco points earned
+            let treesPlanted = @Model.Tour.TreesPlanted * numTravellers;
+            let ecoPointsEarned = @Model.Tour.EcoPoints * numTravellers * ecoPointsMultiplier;
+
+
+            
+
+            // Update HTML elements for the booking summary
+            document.getElementById("price-summary").textContent = `$${totalPrice.toFixed(2)}`;
+            document.getElementById("redeem-summary").textContent = redeemPoints;
+            document.getElementById("final-price").textContent = `$${finalPrice.toFixed(2)}`;
+            document.getElementById("trees-planted").textContent = treesPlanted;
+            document.getElementById("eco-points-earned").textContent = ecoPointsEarned;
+        }
+
+        function updatePassengers() {
+            let numTravellers = document.getElementById("travellers").value;
+            let passengerDetailsDiv = document.getElementById("passenger-details");
+
+            // Clear previous inputs
+            passengerDetailsDiv.innerHTML = "";
+
+            for (let i = 1; i <= numTravellers; i++) {
+                let div = document.createElement("div");
+                div.classList.add("passenger-box");
+                div.innerHTML = `
+                <h5>Passenger ${i} Details</h5>
+                <label>First Name:</label>
+                <input type="text" name="Passengers[${i - 1}].FirstName" required>
+
+                <label>Last Name:</label>
+                <input type="text" name="Passengers[${i - 1}].LastName" required>
+
+                <label>Dietary Requirements:</label>
+                <select name="Passengers[${i - 1}].MealType" required>
+                    <option value="Standard">Standard</option>
+                    <option value="Vegetarian">Vegetarian</option>
+                    <option value="Vegan">Vegan</option>
+                    <option value="Gluten-Free">Gluten-Free</option>
+                    <option value="Halal">Halal</option>
+                </select>
+                `;
+                passengerDetailsDiv.appendChild(div);
+            }
+            updateBookingSummary(); // Update booking summary after adding passenger details
+        }
+
+
+        function validateEcoPoints() {
+            let redeemInput = document.getElementById("redeem-points");
+            let redeemValue = parseInt(redeemInput.value) || 0;
+
+            if (redeemValue > availablePoints) {
+                alert("You cannot redeem more points than you have.");
+                redeemInput.value = availablePoints; // Reset to max possible value
+            }
+            updateBookingSummary(); // Update summary after redeem points validation
+        }
+
+        function handlePublicTransportChange() {
+            let checkbox = document.getElementById("IsPublicTransport");
+            if (checkbox.checked) {
+                ecoPointsMultiplier = 1.5;  // Increase by 50%
+            } else {
+                ecoPointsMultiplier = 1;  // Reset to normal multiplier
+            }
+            updateBookingSummary();  // Update summary with new multiplier
+        }
+
+        window.onload = function () {
+            populateTravellerDropdown(); // Populate the dropdown
+            updateBookingSummary(); // Default the booking summary to 1 traveller
+            
+        };
+
+        document.getElementById("travellers").addEventListener("change", updatePassengers);
+        document.getElementById("redeem-points").addEventListener("input", validateEcoPoints);
+        document.getElementById("IsPublicTransport").addEventListener("change", handlePublicTransportChange);
+
+        
+    </script>
+}
+
+    <h2 style="color: #45CA31;">One step closer to an unforgettable experience and a greener planet</h2><br>
+
+    <form class="bookingForm" method="post">
+    <div class="left-panel">
+        <input type="hidden" name="DepartureID" value="@Model.DepartureID" />
+
+    
+        <h5>Number of travellers</h5>
+        <select id="travellers" name="TravellerCount" onchange="updatePassengers()"></select>
+        
+
+        <div id="passenger-details"></div>
+
+        <!-- Eco-Points Redemption Section -->
+        <h5>Redeem Eco-Points</h5>
+        <p>Available points: <strong>@availablePoints</strong> ( 10 points are equal to $1)</p>
+        <input type="number" id="redeem-points" name="RedeemPoints" min="0" max="@availablePoints" value="0" oninput="validateEcoPoints()">
+        <label style="display: inline-flex; align-items: center; gap: 10px; font-size: 16px; color: #01635E;">
+            <input type="checkbox" id="IsPublicTransport" name="IsPublicTransport" value="true"> Earn 50% more Eco Points rewards by choosing public transport
+        </label>
+    
+    </div>
+
+    <div class="right-panel">
+        <h3>Booking Summary</h3>
+        <h5>@Model.Tour.TourName</h5>
+        <p><strong>Departure Date:</strong> @Model.StartDate.ToString("MMMM dd, yyyy")</p>
+        <p><strong>Price:</strong> <span id="price-summary"></span></p>
+        <p><strong>Eco Points Redeemed:</strong> <span id="redeem-summary"></span></p>
+        <p><strong>Final Price:</strong> <span id="final-price"></span></p>
+
+        <div class="reward-section">
+            <div class="reward-column">
+                <img id="tree" src="~/Images/Game/treeGrow.gif" alt="Trees">
+                <p><strong>Trees Planted:</strong> <span id="trees-planted"></span></p>
+            </div>
+            <div class="reward-column">
+                <img id="coin" src="~/Images/Game/coin.gif" alt="Coins">
+
+                <p><strong>Eco Points Earned:</strong> <span id="eco-points-earned"></span></p>
+            </div>
+        </div>
+        <br>
+
+       
+
+        <button type="submit" class="search-submit-btn">Confirm Booking</button>
+    </div>
+
+     
+
+    </form>
+
+
+

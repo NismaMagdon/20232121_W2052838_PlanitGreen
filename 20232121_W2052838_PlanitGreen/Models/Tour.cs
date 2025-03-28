@@ -31,7 +31,7 @@ namespace _20232121_W2052838_PlanitGreen.Models
 
         public int CalculateEcoPoints()
         {
-            int baseEcoPoints = 100; // Every tour gets at least 50 points
+            int baseEcoPoints = 100; // Every tour gets at least 100 points
 
             // Factor 1: Carbon Footprint Reduction
             double averageCarbonFootprint = 100.0; // Assume an avg carbon footprint of 50kg

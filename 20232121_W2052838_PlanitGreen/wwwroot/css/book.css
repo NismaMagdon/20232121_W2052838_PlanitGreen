@@ -1,0 +1,130 @@
+﻿body {
+}
+
+.bookingForm {
+    display: flex; 
+
+    align-items: flex-start; 
+    gap: 20px; 
+}
+
+.left-panel {
+    width: 45%;
+    background: white;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+.bookingForm select,
+.bookingForm input[type="number"],
+.bookingForm input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+#passenger-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+#passenger-details div {
+    background: #e8f5e9;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    text-align: left;
+
+}
+
+.passenger-box {
+    width: calc(50% - 10px);
+    background: #e8f5e9;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.right-panel {
+    width: 35%;
+    margin-left: 30px;
+    background: #f8f9fa;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 20px;
+    height: fit-content;
+}
+
+
+h5 {
+    color: #2a7a1f;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+
+
+.reward-section {
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.reward-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 48%; /* Adjust width for the two columns */
+}
+
+    .reward-column img {
+        width: 70px;
+        height: 70px;
+        margin-bottom: 10px; /* Add space between image and text */
+    }
+
+    .reward-column p {  
+        color: #01635E; 
+        font-size: 16px;
+    }
+
+
+
+
+
+@media (max-width: 768px) {
+    .bookingForm {
+        flex-direction: column; /* Stack panels on small screens */
+    }
+
+    .left-panel,
+    .right-panel {
+        width: 100%; /* Full width on mobile */
+    }
+
+    .reward-section {
+        flex-direction: column; /* Stack columns on small screens */
+    }
+
+    .reward-column {
+        width: 100%; /* Full width for each column */
+        margin-bottom: 15px; /* Add space between stacked columns */
+    }
+}

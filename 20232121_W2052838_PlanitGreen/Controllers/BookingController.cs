@@ -1,6 +1,7 @@
 ﻿using _20232121_W2052838_PlanitGreen.Data;
 using _20232121_W2052838_PlanitGreen.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace _20232121_W2052838_PlanitGreen.Controllers
 {
@@ -28,11 +29,17 @@ namespace _20232121_W2052838_PlanitGreen.Controllers
                 return RedirectToAction("Login", "Account");
             }
 
-            var departure = _context.Departure.FirstOrDefault(d => d.DepartureID == departureId);
+            var departure = _context.Departure
+            .Include(d => d.Tour) // Ensuring Tour data is included
+            .FirstOrDefault(d => d.DepartureID == departureId);
             if (departure == null)
             {
                 return NotFound();
             }
+
+            var ecoPoints = _context.EcoPoints.FirstOrDefault(e => e.User.UserID == userId);
+            ViewBag.AvailablePoints = ecoPoints?.AvailablePoints ?? 0; // Default to 0 if no points found
+
 
             return View(departure);
 
