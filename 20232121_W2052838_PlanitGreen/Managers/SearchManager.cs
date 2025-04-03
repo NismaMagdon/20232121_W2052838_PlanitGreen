@@ -91,7 +91,7 @@ namespace _20232121_W2052838_PlanitGreen.Managers
             switch (sortOrder)
             {
                 case "ecoPoints":
-                    tours = tours.OrderByDescending(t => t.EcoPoints); // Eco Points: high to low
+                    tours = tours.OrderByDescending(t => t.CalculateEcoPoints()); // Eco Points: high to low
                     break;
                 case "price-low":
                     tours = tours.OrderBy(t => t.Price); // Price: low to high
@@ -100,7 +100,7 @@ namespace _20232121_W2052838_PlanitGreen.Managers
                     tours = tours.OrderByDescending(t => t.Price); // Price: high to low
                     break;
                 default:
-                    tours = tours.OrderByDescending(t => t.EcoPoints); // Eco Points: high to low
+                    tours = tours.OrderByDescending(t => t.CalculateEcoPoints()); // Eco Points: high to low
                     break;
             }
 

@@ -60,7 +60,7 @@
 
             // Calculate number of trees and eco points earned
             let treesPlanted = @Model.Tour.TreesPlanted * numTravellers;
-            let ecoPointsEarned = @Model.Tour.EcoPoints * numTravellers * ecoPointsMultiplier;
+            let ecoPointsEarned = @Model.Tour.CalculateEcoPoints() * numTravellers * ecoPointsMultiplier;
 
 
             
@@ -143,13 +143,13 @@
 
     <h2 style="color: #45CA31;">One step closer to an unforgettable experience and a greener planet</h2><br>
 
-    <form class="bookingForm" method="post">
+    <form class="bookingForm" method="post" asp-action="ConfirmBooking" asp-controller="Booking">
     <div class="left-panel">
         <input type="hidden" name="DepartureID" value="@Model.DepartureID" />
 
     
         <h5>Number of travellers</h5>
-        <select id="travellers" name="TravellerCount" onchange="updatePassengers()"></select>
+        <select id="travellers" name="passengerCount" onchange="updatePassengers()"></select>
         
 
         <div id="passenger-details"></div>
@@ -157,7 +157,7 @@
         <!-- Eco-Points Redemption Section -->
         <h5>Redeem Eco-Points</h5>
         <p>Available points: <strong>@availablePoints</strong> ( 10 points are equal to $1)</p>
-        <input type="number" id="redeem-points" name="RedeemPoints" min="0" max="@availablePoints" value="0" oninput="validateEcoPoints()">
+        <input type="number" id="redeem-points" name="redeemPoints" min="0" max="@availablePoints" value="0" oninput="validateEcoPoints()">
         <label style="display: inline-flex; align-items: center; gap: 10px; font-size: 16px; color: #01635E;">
             <input type="checkbox" id="IsPublicTransport" name="IsPublicTransport" value="true"> Earn 50% more Eco Points rewards by choosing public transport
         </label>

@@ -1,4 +1,5 @@
 ﻿using _20232121_W2052838_PlanitGreen.Data;
+using _20232121_W2052838_PlanitGreen.Managers;
 using _20232121_W2052838_PlanitGreen.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +32,7 @@ namespace _20232121_W2052838_PlanitGreen.Controllers
 
             var departure = _context.Departure
             .Include(d => d.Tour) // Ensuring Tour data is included
+            .ThenInclude(t => t.TourStyle)
             .FirstOrDefault(d => d.DepartureID == departureId);
             if (departure == null)
             {
@@ -39,10 +41,39 @@ namespace _20232121_W2052838_PlanitGreen.Controllers
 
             var ecoPoints = _context.EcoPoints.FirstOrDefault(e => e.User.UserID == userId);
             ViewBag.AvailablePoints = ecoPoints?.AvailablePoints ?? 0; // Default to 0 if no points found
-
+            ViewBag.TourStyleName = departure.Tour?.TourStyle?.TourStyleName;
 
             return View(departure);
 
+        }
+
+        [HttpPost]
+        public IActionResult ConfirmBooking(int DepartureID, int passengerCount, int redeemPoints, bool IsPublicTransport, List<Passenger> Passengers)
+        {
+            var departure = _context.Departure
+               .FirstOrDefault(d => d.DepartureID == DepartureID);
+
+            var userId = HttpContext.Session.GetInt32("UserID");
+            var user = _context.User.FirstOrDefault(u => u.UserID == userId);
+
+            // Create an instance of BookingManager
+            var bookingManager = new BookingManager(_context);
+
+            var bookingResult = bookingManager.CreateBooking(
+                departure,
+                user,
+                passengerCount,
+                redeemPoints,
+                IsPublicTransport,
+                Passengers
+            );
+
+            if (bookingResult == null)
+            {
+                return BadRequest("Booking could not be created.");
+            }
+
+            return RedirectToAction("BookingConfirmation", new { id = bookingResult.BookingID });
         }
     }
 }

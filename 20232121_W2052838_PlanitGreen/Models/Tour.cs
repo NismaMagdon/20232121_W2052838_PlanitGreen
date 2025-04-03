@@ -11,7 +11,6 @@ namespace _20232121_W2052838_PlanitGreen.Models
         public string TourName { get; set; }
         public string Description { get; set; }
         public virtual TourStyle TourStyle { get; set; }
-        public int EcoPoints { get; set; }
         public virtual Destination Destination { get; set; }
         public int Duration { get; set; }
         public double Price { get; set; }
