@@ -13,6 +13,7 @@ namespace _20232121_W2052838_PlanitGreen.Models
         public string Username { get; set; }
         public string Password { get; set; }
         public Role Role { get; set; } = Role.Traveller;
+        public int TreesPlanted { get; set; } = 0;
 
     
 

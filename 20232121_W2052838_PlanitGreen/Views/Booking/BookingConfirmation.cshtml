@@ -1,0 +1,62 @@
+﻿@model _20232121_W2052838_PlanitGreen.Models.Booking
+@{
+	ViewData["Title"] = "Booking Confirmation";
+}
+
+@section Scripts{
+    <link rel="stylesheet" href="~/css/bookingConfirmation.css" asp-append-version="true" />
+    <script>
+            document.addEventListener("DOMContentLoaded", function () {
+            let treesPlanted = @Html.Raw(Model.Departure.Tour.TreesPlanted);
+            let passengerQty = @Html.Raw(Model.PassengerQty);
+            let ecoPoints = @Html.Raw(Model.Departure.Tour.CalculateEcoPoints());
+            let isPublicTransport = @Html.Raw(Model.IsPublicTransport.ToString().ToLower());
+
+            let totalTreesPlanted = treesPlanted * passengerQty;
+            let totalEcoPoints = ecoPoints * passengerQty;
+
+            if (isPublicTransport) {
+                totalEcoPoints = totalEcoPoints * 1.5;
+            }
+
+            document.getElementById("totalTreesPlantedText").textContent = totalTreesPlanted;
+            document.getElementById("totalEcoPointsText").textContent = Math.round(totalEcoPoints);
+        });
+    </script>
+}
+    
+
+<h2 style="color: #45CA31;">Your Booking is Confirmed!</h2>
+<div class="confirmation-summary-wrapper">
+    <div class="confirmation-summary">
+        <h3>Booking Details</h3>
+        <p><strong>Tour Name:</strong> @Model.Departure.Tour.TourName</p>
+        <p><strong>Departure Date:</strong> @Model.Departure.StartDate.ToString("MMMM dd, yyyy")</p>
+        <p><strong>Number of Passengers:</strong> @Model.PassengerQty</p>
+        <p><strong>Price:</strong> $@Model.TotalPrice.ToString("F2")</p>
+    </div>
+
+    <div class="eco-impact-summary">
+        <h3>Your Eco-Impact</h3>
+        <div class="reward-section">
+            <div class="reward-column">
+                <img id="tree" src="~/Images/Game/treeGrow.gif" alt="Trees" />
+                <p><strong>Trees Planted:</strong> <span id="totalTreesPlantedText"></span></p>
+            </div>
+            <div class="reward-column">
+                <img id="coin" src="~/Images/Game/coin.gif" alt="Coins" />
+                <p><strong>Eco Points:</strong> <span id="totalEcoPointsText"></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="achievement-link">
+    <p>Want to see your progress or check if you've unlocked any badges?<br><a href="@Url.Action("Dashboard", "Achievement")">Visit your Green Achievements dashboard</a></p>
+</div>
+
+<div class="thank-you-message">
+    <h3>Thank you for booking with us!</h3>
+    <p>Your journey is not just an adventure for you, but also a step toward a greener planet. We hope you have an amazing time on your trip!</p>
+</div>
+

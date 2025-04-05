@@ -10,15 +10,18 @@ namespace _20232121_W2052838_PlanitGreen.Controllers
     public class BookingController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly BadgeEvaluator _badgeEvaluator;
 
-        public BookingController(ApplicationDbContext context)
+        public BookingController(ApplicationDbContext context, BadgeEvaluator badgeEvaluator)
         {
             _context = context;
+            _badgeEvaluator = badgeEvaluator;
         }
 
         //GET: Booking page (User must be logged in)
         public IActionResult Book(int departureId)
         {
+            // Check if user is logged in by looking for UserID in the session
             int? userId = HttpContext.Session.GetInt32("UserID");
 
             if (userId == null) {
@@ -51,13 +54,15 @@ namespace _20232121_W2052838_PlanitGreen.Controllers
         public IActionResult ConfirmBooking(int DepartureID, int passengerCount, int redeemPoints, bool IsPublicTransport, List<Passenger> Passengers)
         {
             var departure = _context.Departure
+                .Include (d => d.Tour)
+                .Include(d => d.Tour.TourStyle)
                .FirstOrDefault(d => d.DepartureID == DepartureID);
 
             var userId = HttpContext.Session.GetInt32("UserID");
             var user = _context.User.FirstOrDefault(u => u.UserID == userId);
 
             // Create an instance of BookingManager
-            var bookingManager = new BookingManager(_context);
+            var bookingManager = new BookingManager(_context, _badgeEvaluator);
 
             var bookingResult = bookingManager.CreateBooking(
                 departure,
@@ -74,6 +79,24 @@ namespace _20232121_W2052838_PlanitGreen.Controllers
             }
 
             return RedirectToAction("BookingConfirmation", new { id = bookingResult.BookingID });
+        }
+
+        //GET: Booking confirmation
+        public IActionResult BookingConfirmation(int id)
+        {
+            var booking = _context.Booking
+                .Include(b => b.Departure)
+                    .ThenInclude(d => d.Tour)
+                    .ThenInclude(t => t.TourStyle)
+                .Include(b => b.User)
+                .FirstOrDefault(b => b.BookingID == id);
+
+            if (booking == null)
+            {
+                return NotFound();
+            }
+
+            return View(booking);
         }
     }
 }

@@ -1,0 +1,93 @@
+﻿h2 {
+    font-size: 2rem;
+    color: #45CA31;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.confirmation-summary-wrapper {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: 20px auto;
+    max-width: 700px;
+    gap: 20px;
+}
+
+.confirmation-summary,
+.eco-impact-summary {
+    background-color: white;
+    border: 1px solid #d4edd4;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 128, 0, 0.05);
+    width: 48%;/* Makes both sections take up 48% of the container width */
+}
+
+    .confirmation-summary p,
+    .eco-impact-summary p {
+        font-size: 1rem;
+        margin: 10px 0;
+    }
+
+    .confirmation-summary h3,
+    .eco-impact-summary h3 {
+        color: #01635E;
+        font-size: 1.4rem;
+        margin-bottom: 15px;
+        text-align:center;
+    }
+
+
+.reward-section {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+.reward-column {
+    text-align: center;
+    margin: 10px;
+}
+
+    .reward-column img {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 10px;
+    }
+
+
+
+.thank-you-message {
+    background-color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+    .thank-you-message p {
+        font-size: 1.1rem;
+    }
+
+
+.achievement-link {
+    color: orange;
+    font-size: 1.2rem; 
+    font-weight: bold;
+    text-align: center;
+    padding: 15px 15px; 
+    border-radius: 8px; 
+    transition: background-color 0.3s ease, transform 0.3s ease; 
+
+}
+
+    .achievement-link a {
+        text-decoration: none;
+    }
+
+    .dashboard-link:hover {
+        background-color: #45CA31; /* Change to green on hover */
+        color: white;
+        transform: scale(1.05); /* Slightly enlarge when hovered */
+    }

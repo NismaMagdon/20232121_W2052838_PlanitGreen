@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using _20232121_W2052838_PlanitGreen.Data;
 
@@ -11,9 +12,11 @@ using _20232121_W2052838_PlanitGreen.Data;
 namespace _20232121_W2052838_PlanitGreen.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250403164249_AddTreesPlantedToUser")]
+    partial class AddTreesPlantedToUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,10 +33,6 @@ namespace _20232121_W2052838_PlanitGreen.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BadgeID"));
 
-                    b.Property<string>("BadgeCategory")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("BadgeDescription")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -45,9 +44,6 @@ namespace _20232121_W2052838_PlanitGreen.Migrations
                     b.Property<string>("BadgeName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("BonusEcoPoints")
-                        .HasColumnType("int");
 
                     b.Property<string>("CriteriaType")
                         .IsRequired()
