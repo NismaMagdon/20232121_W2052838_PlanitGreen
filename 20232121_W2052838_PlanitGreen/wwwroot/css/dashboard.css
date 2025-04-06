@@ -1,0 +1,118 @@
+﻿.dashboard-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+    .dashboard-header h2 {
+        margin: 0.5rem 0;
+        font-weight: 600;
+    }
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+}
+
+.dashboard-card {
+    background-color: #ffffff;
+    border: 1px solid #d0e9d3;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 10px rgba(46, 125, 50, 0.08);
+}
+
+.reward-column {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+    .reward-column img {
+        width: 80px;
+        height: 80px;
+    }
+
+.badges-section h4 {
+    margin-bottom: 0.75rem;
+    color: #388e3c;
+}
+
+.badge-filter {
+    margin: 1rem 0;
+}
+
+.badge-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.badge-item {
+    border: 1px solid #c8e6c9;
+    background-color: white;
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(46, 125, 50, 0.05);
+    transition: transform 0.2s ease;
+}
+
+    .badge-item:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(46, 125, 50, 0.12);
+    }
+
+    .badge-item img {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 0.5rem;
+    }
+
+.leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    font-size: 0.95rem;
+    box-shadow: 0 2px 6px rgba(46, 125, 50, 0.08);
+}
+    .leaderboard-table th,
+    .leaderboard-table td {
+        padding: 0.75rem;
+        text-align: center;
+        border-bottom: 1px solid #e0f2f1;
+    }
+
+    .leaderboard-table thead {
+        background-color: #E8F5E9;
+        color: #0A504C;
+    }
+
+    .leaderboard-table tbody tr:hover {
+        background-color: #F1F8E9;
+    }
+
+    .leaderboard-table .leaderboard-top {
+    
+        font-weight: bold;
+        color: orange;
+    }
+
+@media (max-width: 600px) {
+    .reward-column {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .dashboard-card {
+        padding: 1rem;
+    }
+
+    .badge-item img {
+        width: 48px;
+        height: 48px;
+    }
+}

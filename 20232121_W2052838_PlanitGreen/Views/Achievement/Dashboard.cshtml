@@ -1,5 +1,120 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model _20232121_W2052838_PlanitGreen.Models.DashboardViewModel
+
 @{
+	ViewData["Title"] = "Achievement Dashboard";
+
+	var badgeCategories = new List<string>
+	{
+		"Booking-Based Badges",
+		"Sustainability Actions – Public Transport",
+		"Sustainability Actions – Eco Point Donations",
+		"Sustainability Action - Trees Planted",
+		"Engagement Badges"
+	};
 }
+
+@section Scripts{
+	<link rel="stylesheet" href="~/css/dashboard.css" asp-append-version="true" />
+}
+
+<div class="dashboard-container">
+	<div class="dashboard-header">
+		<h2 style="color:#0A504C;">Hi @Model.FirstName,</h2>
+		<h2 style="color:#45CA31;">Welcome to your Green Achievements dashboard</h2>
+	</div>
+
+	<div class="dashboard-grid">
+		<!-- Stats Card -->
+		<div class="dashboard-card">
+			<h4 style="color: #0A504C;">My Eco Impact</h4>
+			<div class="reward-column">
+				<img id="tree" src="~/Images/Game/treeGrow.gif" alt="Trees" />
+				<p><strong>Trees Planted:</strong> <span style="color: #45CA31; font-weight: bold;">@Model.TreesPlanted</span></p>
+			</div>
+			<div class="reward-column">
+				<img id="coin" src="~/Images/Game/coin.gif" alt="Coins" />
+				<p><strong>Total Eco Points Earned:</strong> <span style="color: #45CA31; font-weight: bold;">@Model.TotalEcoPoints</span></p>
+				<p><strong>Eco Points Available:</strong> <span style="color: #45CA31; font-weight: bold;">@Model.AvailableEcoPoints</span></p>
+			</div>
+		</div>
+
+		<!-- Badges Section -->
+		<div class="dashboard-card badges-section">
+			<h4 style="color: #0A504C;">My Badges</h4>
+			<a style="color:#45CA31" href="@Url.Action("Rewards", "Home")">Badges available to unlock</a>
+
+			<div class="badge-filter">
+				<label for="badgeCategory"><strong>Filter by Category:</strong></label>
+				<select id="badgeCategory" onchange="filterBadges()" style="width: 100%; padding: 6px;">
+					<option value="All">All Categories</option>
+					@foreach (var category in badgeCategories)
+					{
+						<option value="@category">@category</option>
+					}
+				</select>
+			</div>
+
+			<div class="badge-list" id="badgeList">
+				@if (Model.EarnedBadges.Any())
+				{
+					@foreach (var badge in Model.EarnedBadges)
+					{
+						<div class="badge-item" data-category="@badge.BadgeCategory">
+							<img src="@Url.Content(badge.BadgeImage)" alt="@badge.BadgeName" />
+							<div><strong>@badge.BadgeName</strong>:<br>@badge.BadgeDescription</div>
+						</div>
+					}
+				}
+				else
+				{
+					<p>No badges earned yet.</p>
+				}
+			</div>
+		</div>
+
+		<!-- Leaderboard Section -->
+		<div class="dashboard-card">
+			<h4 style="color: #0A504C;">Eco Leaderboard</h4>
+			<table class="leaderboard-table">
+				<thead>
+					<tr>
+						<th>Rank</th>
+						<th>User</th>
+						<th>Eco Points</th>
+						<th>Badges</th>
+					</tr>
+				</thead>
+				<tbody>
+					@for (int i = 0; i < Model.Leaderboard.Count; i++)
+					{
+						var user = Model.Leaderboard[i];
+						<tr class="@(i == 0 ? "leaderboard-top" : "")">
+							<td>@(i + 1)</td>
+							<td>@user.Username</td>
+							<td>@user.TotalPoints</td>
+							<td>@user.BadgesEarnedCount</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+
+	</div>
+</div>
+
+<!-- Filtering Script -->
+<script>
+	function filterBadges() {
+		const selectedCategory = document.getElementById("badgeCategory").value;
+		const badges = document.querySelectorAll(".badge-item");
+
+		badges.forEach(badge => {
+			const badgeCategory = badge.getAttribute("data-category");
+			if (selectedCategory === "All" || badgeCategory === selectedCategory) {
+				badge.style.display = "block";
+			} else {
+				badge.style.display = "none";
+			}
+		});
+	}
+</script>

@@ -83,7 +83,7 @@ namespace _20232121_W2052838_PlanitGreen.Managers
             user.TreesPlanted += treesEarned;
 
             // Reduce the PacksQty by the number of passengers
-            departure.PacksQty -= passengerCount;
+            departure.PacksQty += passengerCount;
 
             // Update the departure's PacksQty in the database
             _context.Departure.Update(departure);
