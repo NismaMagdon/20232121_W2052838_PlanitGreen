@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<_20232121_W2052838_PlanitGreen.Models.Tour>
 @{
 	ViewData["Title"] = "Search Results";
+    var wishlistTourIds = ViewBag.WishlistTourIds as List<int> ?? new List<int>();
 }
 @section Scripts {
 	<link rel="stylesheet" href="~/css/searchResults.css" asp-append-version="true" />
@@ -79,7 +80,29 @@
                     </div>
                     </a>
 
-                    <button id="wishlist-btn"><img src="~/Images/Header/Wishlist-icon.png" alt="AddWishlist" class="icon">Add to my wishlist</button>
+                    <!-- Check if the user has this tour in their wishlist -->
+                        @if (wishlistTourIds.Contains(tour.TourID))
+                        {
+                            <!-- If the tour is already in the wishlist, show a "Remove from Wishlist" button -->
+                            <form method="post" asp-controller="Wishlist" asp-action="RemoveFromWishlist">
+                                <input type="hidden" name="tourId" value="@tour.TourID" />
+                                <button type="submit" class="wishlist-button active">
+                                    <img src="~/Images/Header/Wishlist-icon.png" alt="Remove from Wishlist" class="icon" />
+                                    Remove from wishlist
+                                </button>
+                            </form>
+                        }
+                        else
+                        {
+                            <!-- If the tour is not in the wishlist, show an "Add to Wishlist" button -->
+                            <form method="post" asp-controller="Wishlist" asp-action="AddToWishlist">
+                                <input type="hidden" name="tourId" value="@tour.TourID" />
+                                <button type="submit" class="wishlist-button">
+                                    <img src="~/Images/Header/Wishlist-icon.png" alt="Add to Wishlist" class="icon" />
+                                    Add to my wishlist
+                                </button>
+                            </form>
+                        }
                 </div>
             }
         }

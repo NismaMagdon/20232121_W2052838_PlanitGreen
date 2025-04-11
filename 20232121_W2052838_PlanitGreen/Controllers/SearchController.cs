@@ -1,16 +1,20 @@
-﻿using _20232121_W2052838_PlanitGreen.Managers;
+﻿using _20232121_W2052838_PlanitGreen.Data;
+using _20232121_W2052838_PlanitGreen.Managers;
 using _20232121_W2052838_PlanitGreen.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace _20232121_W2052838_PlanitGreen.Controllers
 {
     public class SearchController : Controller
     {
         private readonly SearchManager searchManager;
+        private readonly ApplicationDbContext _context;
 
-        public SearchController(SearchManager searchManager)
+        public SearchController(SearchManager searchManager, ApplicationDbContext context)
         {
             this.searchManager = searchManager;
+            _context = context;
         }
 
         // Action to handle the initial search (GET request)
@@ -18,9 +22,24 @@ namespace _20232121_W2052838_PlanitGreen.Controllers
         {
             var tours = searchManager.GetToursByKeyword(searchQuery)?.ToList() ?? new List<Tour>();
 
+            // Get the wishlist IDs if user is logged in
+            int? userId = HttpContext.Session.GetInt32("UserID");
+            List<int> wishlistTourIds = new();
+
+            if (userId.HasValue)
+            {
+                wishlistTourIds = _context.WishlistItem
+                    .Where(w => w.User.UserID == userId.Value)
+                    .Select(w => w.Tour.TourID)
+                    .ToList();
+            }
+
+            ViewBag.WishlistTourIds = wishlistTourIds;
             ViewData["SearchQuery"] = searchQuery;  // Keep search query in the view for input persistence
             return View(tours);
         }
+
+
 
         // Action to handle filtering and sorting (POST request)
         [HttpPost]

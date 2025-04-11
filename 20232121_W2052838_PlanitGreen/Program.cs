@@ -14,6 +14,7 @@ builder.Services.AddScoped<UserManager>();
 builder.Services.AddScoped<Authenticator>();
 builder.Services.AddScoped<SearchManager>();
 builder.Services.AddScoped<BadgeEvaluator>();
+builder.Services.AddScoped<DonationManager>();
 
 // Add session services
 builder.Services.AddDistributedMemoryCache(); // Required for session state

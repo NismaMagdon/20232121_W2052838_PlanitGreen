@@ -162,22 +162,33 @@ footer {
     font-weight: bold;
 }
 
-#wishlist-btn {
-    background: none;
-    border: none;
-    color: #007bff;
+
+.wishlist-button {
+    background-color: transparent;
+    color: #45CA31;
+    font-size: 16px;
+    font-weight: bold;
     cursor: pointer;
-    font-size: 15px;
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    padding: 10px;
-    margin-top: auto;
-    border-top: 1px solid #eee;
+    justify-content: center;
+    transition: color 0.3s ease, transform 0.2s ease;
+    text-decoration: none;
+    border: none;
+    box-shadow: none;
 }
 
-#wishlist-btn:hover {
-    color: #0056b3;
-}
+
+    .wishlist-button:hover {
+        color: #35a624;
+        transform: scale(1.03);
+    }
+
+    .wishlist-button.active {
+        color: red;
+        border-radius: 6px;
+        padding: 6px 12px;
+    }
 
 .icon {
     width: 16px;

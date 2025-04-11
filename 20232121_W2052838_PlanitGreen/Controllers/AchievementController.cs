@@ -1,4 +1,5 @@
 ﻿using _20232121_W2052838_PlanitGreen.Data;
+using _20232121_W2052838_PlanitGreen.Managers;
 using _20232121_W2052838_PlanitGreen.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,10 +11,12 @@ namespace _20232121_W2052838_PlanitGreen.Controllers
     {
 
         private readonly ApplicationDbContext _context;
+        private readonly DonationManager _donationManager;
 
-        public AchievementController(ApplicationDbContext context)
+        public AchievementController(ApplicationDbContext context, DonationManager donationManager)
         {
             _context = context;
+            _donationManager = donationManager;
         }
 
         public IActionResult Dashboard()
@@ -71,6 +74,55 @@ namespace _20232121_W2052838_PlanitGreen.Controllers
             };
 
             return View(viewModel);
+        }
+
+        // POST: Handle donation logic using DonationManager
+        [HttpPost]
+        public IActionResult DonateEcoPoints(int donationAmount)
+        {
+            int? userId = HttpContext.Session.GetInt32("UserID");
+            if (userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            var user = _context.User.FirstOrDefault(u => u.UserID == userId);
+
+            // Ensure the user has enough eco points to donate
+            if (donationAmount <= 0 || user == null)
+            {
+                ViewBag.ErrorMessage = "Invalid donation amount.";
+                return RedirectToAction("Dashboard");
+            }
+
+            // Call the DonationManager to handle the donation logic
+            var donation = _donationManager.DonateEcoPoints(user, donationAmount);
+
+            if (donation == null)
+            {
+                // If donation failed (e.g., not enough eco points)
+                ViewBag.ErrorMessage = "You do not have enough eco points to donate.";
+                return RedirectToAction("Dashboard"); // Stay on the same page with error
+            }
+
+            // If donation is successful, redirect to confirmation page
+            return RedirectToAction("DonationConfirmation", new { id = donation.DonationID });
+        }
+
+        // GET: Donation confirmation page
+        public IActionResult DonationConfirmation(int id)
+        {
+            var donation = _context.Donation
+            .Include(d => d.User)
+            .FirstOrDefault(d => d.DonationID == id);
+
+            if (donation == null)
+            {
+                return NotFound();
+            }
+
+            return View(donation);
+
         }
     }
 }

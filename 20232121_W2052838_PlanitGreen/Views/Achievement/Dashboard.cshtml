@@ -15,6 +15,17 @@
 
 @section Scripts{
 	<link rel="stylesheet" href="~/css/dashboard.css" asp-append-version="true" />
+
+	<script>
+			function updateDonationUI() {
+			const select = document.getElementById("donationAmount");
+			const selectedValue = parseInt(select.value);
+			const totalPoints = @Model.AvailableEcoPoints;
+
+			document.getElementById("treeCount").innerText = selectedValue / 10;
+		    document.getElementById("remainingCount").innerText = totalPoints - selectedValue;
+		}
+	</script>
 }
 
 <div class="dashboard-container">
@@ -97,6 +108,30 @@
 					}
 				</tbody>
 			</table>
+		</div>
+
+		<div class="dashboard-card">
+			<h4 style="color: #0A504C;">Make a Difference</h4>
+			<p>Use your Eco Points to support tree planting. Every 10 Eco Points = 1 tree planted 🌱</p>
+
+			<form asp-action="DonateEcoPoints" asp-controller="Achievement" method="post">
+				<div class="donation-form">
+					<label for="donationAmount"><strong>Select amount to donate:</strong></label>
+					<select id="donationAmount" name="donationAmount" onchange="updateDonationUI()" style="width: 100%; padding: 6px;">
+						@for (int i = 10; i <= Model.AvailableEcoPoints; i += 10)
+						{
+							<option value="@i">@i Points</option>
+						}
+					</select>
+
+					<p id="treeInfo" style="margin-top: 10px;"><strong>Trees to be planted:</strong> <span id="treeCount" style="color: #45CA31; font-weight: bold;"> 1</span></p>
+					<p id="remainingPoints"><strong>Eco Points remaining after donation:</strong> <span id="remainingCount" style="color: #45CA31; font-weight: bold;">@(Model.AvailableEcoPoints - 10)</span></p>
+
+					<button type="submit" class="search-submit-btn">
+						Donate Now
+					</button>
+				</div>
+			</form>
 		</div>
 
 	</div>

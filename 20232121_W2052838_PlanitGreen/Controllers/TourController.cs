@@ -26,6 +26,20 @@ namespace _20232121_W2052838_PlanitGreen.Controllers
             {
                 return NotFound();
             }
+
+            // Get the wishlist IDs if user is logged in
+            int? userId = HttpContext.Session.GetInt32("UserID");
+            List<int> wishlistTourIds = new();
+
+            if (userId.HasValue)
+            {
+                wishlistTourIds = _context.WishlistItem
+                    .Where(w => w.User.UserID == userId.Value)
+                    .Select(w => w.Tour.TourID)
+                    .ToList();
+            }
+
+            ViewBag.WishlistTourIds = wishlistTourIds;
             return View(tour);
         }
     }

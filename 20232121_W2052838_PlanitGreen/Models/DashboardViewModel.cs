@@ -15,5 +15,6 @@
         public int TotalBadgesEarned => EarnedBadges?.Count ?? 0;
 
         public List<UserLeaderboardEntry> Leaderboard { get; set; } = new();
+        public int DonationAmount { get; set; }
     }
 }

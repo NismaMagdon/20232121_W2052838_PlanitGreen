@@ -1,0 +1,60 @@
+﻿@model List<_20232121_W2052838_PlanitGreen.Models.Tour>
+@{
+	ViewData["Title"] = "My Wishlist";
+}
+
+@section Scripts{
+    <link rel="stylesheet" href="~/css/searchResults.css" asp-append-version="true" />
+}
+
+<h2 style="color:#0A504C;">My Wishlist</h2>
+
+@if (Model == null || !Model.Any())
+{
+    <p style="text-align:center; color:#35a624; font-size:1.5rem; font-weight:bold;">
+        Your wishlist is empty.
+    </p>
+}
+else
+{
+    <div class="trip-results">
+        @foreach (var tour in Model)
+        {
+            <div class="tour-card">
+                <a asp-controller="Tour" asp-action="Details" asp-route-id="@tour.TourID" style="text-decoration: none; color: inherit;">
+                    @if (tour.ImageList != null && tour.ImageList.Any())
+                    {
+                        <img src="@Url.Content(tour.ImageList.First().Path)" alt="Tour Image" class="tour-image" />
+                    }
+                    else
+                    {
+                        <img src="~/Images/default-image.jpg" alt="No Image Available" class="tour-image" />
+                    }
+                    <div style="padding: 15px; display: flex; flex-direction: column; gap: 5px;">
+                        <h3 style="font-size: 1.2rem; font-weight: bold; margin: 0;">@tour.TourName</h3>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+                            <p style="color: #777; font-size: 0.9rem; margin: 0;">@tour.TourStyle.TourStyleName</p>
+                            <span style="color: #ccc;">|</span>
+                            <p style="color: #777; font-size: 0.9rem; margin: 0;">@tour.Duration days</p>
+                        </div>
+                        <p class="eco-points @(tour.CalculateEcoPoints() >= 170 ? "high-eco" : "low-eco")">
+                            @tour.CalculateEcoPoints() Eco Points
+                        </p>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div></div>
+                            <p style="color: black; font-weight: bold; font-size: 1rem; margin: 5px 0;">USD $ @tour.Price</p>
+                        </div>
+                    </div>
+                </a>
+
+                <form method="post" asp-controller="Wishlist" asp-action="RemoveFromWishlist" style="padding: 0 15px 15px;">
+                    <input type="hidden" name="tourId" value="@tour.TourID" />
+                    <button type="submit" class="wishlist-button active">
+                        <img src="~/Images/Header/Wishlist-icon.png" alt="Remove from Wishlist" class="icon" />
+                        Remove from wishlist
+                    </button>
+                </form>
+            </div>
+        }
+    </div>
+}

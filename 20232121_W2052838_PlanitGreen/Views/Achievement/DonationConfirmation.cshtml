@@ -1,0 +1,48 @@
+﻿@model _20232121_W2052838_PlanitGreen.Models.Donation
+
+@{
+    ViewData["Title"] = "Donation Confirmation";
+}
+
+@section Scripts {
+    <link rel="stylesheet" href="~/css/donationConfirmation.css" asp-append-version="true" />
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let donatedPoints = @Html.Raw(Model.Amount);
+            let treesPlanted = donatedPoints / 10;
+
+            document.getElementById("donatedPointsText").textContent = donatedPoints;
+            document.getElementById("treesPlantedText").textContent = treesPlanted;
+        });
+    </script>
+}
+
+<h2 style="color: #45CA31;">Thank You for Your Donation!</h2>
+
+<div class="confirmation-summary-wrapper">
+    <div class="eco-impact-summary">
+        <h3>Your Contribution to a Greener Planet</h3>
+        <div class="reward-section">
+            <div class="reward-column">
+                <img id="tree" src="~/Images/Game/treeGrow.gif" alt="Trees" />
+                <p><strong>Trees Planted:</strong> <span id="treesPlantedText"></span></p>
+            </div>
+            <div class="reward-column">
+                <img id="coin" src="~/Images/Game/coin.gif" alt="Eco Points" />
+                <p><strong>Eco Points Donated:</strong> <span id="donatedPointsText"></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="achievement-link">
+    <p>
+        Check out your Green Achievements to see your progress and earned badges!<br>
+        <a href="@Url.Action("Dashboard", "Achievement")">Go to Achievement Dashboard</a>
+    </p>
+</div>
+
+<div class="thank-you-message">
+    <h3>You Made a Difference!</h3>
+    <p>Your generous donation supports reforestation and climate action. Thank you for being an eco-hero!</p>
+</div>

@@ -20,7 +20,11 @@
                     <a asp-controller="Achievement" asp-action="Dashboard" class="header-btn">
                         <img src="~/Images/Header/Achievement-icon.png" alt="Achievements" class="icon">My Green Achievements
                     </a>
-                    <button id="wishlist-header-btn" class="header-btn"><img src="~/Images/Header/Wishlist-icon.png" alt="Wishlist" class="icon">My Wishlist</button>
+
+                    <a asp-controller="Wishlist" asp-action="MyWishlist" class="header-btn">
+                        <img src="~/Images/Header/Wishlist-icon.png" alt="Wishlist" class="icon">My Wishlist
+                    </a>
+                    
                     <button id="bookings-header-btn" class="header-btn"><img src="~/Images/Header/Bookings-icon.png" alt="Bookings" class="icon">My Bookings</button>
                     @if (Context.Session.GetInt32("UserID") != null)
                     {
