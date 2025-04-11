@@ -1,6 +1,45 @@
-﻿@{
-    ViewData["Title"] = "Eco Rewards Info Page";
+﻿@model List<_20232121_W2052838_PlanitGreen.Models.Badge>
+@{
+    ViewData["Title"] = "Rewards";
+    var categories = Model.GroupBy(b => b.BadgeCategory);
 }
 
-<h2>Eco Rewards with PlanitGreen</h2>
-<p>Use this page to add information about how the reward scheme works</p>
+@section Scripts{
+    <link rel="stylesheet" href="~/css/rewards.css" asp-append-version="true" />
+}
+
+<div class="rewards-container">
+    <h1>Eco Rewards with PlanitGreen</h1>
+
+    <section class="intro-section">
+        <p>PlanitGreen rewards your eco-friendly choices! You can earn <strong>Eco Points</strong> by:</p>
+        <ul>
+            <li>Booking eco-friendly tours</li>
+            <li>Choosing public transport options for travel</li>
+            <li>Unlocking special badges for completing meaningful actions</li>
+        </ul>
+        <p>These points can be used for discounts on trips or for tree planting initiatives.</p>
+    </section>
+
+    <hr />
+
+    <h2>Badge Categories</h2>
+
+    @foreach (var category in categories)
+    {
+        <section>
+            <h3>@category.Key</h3>
+            <div class="badge-grid">
+                @foreach (var badge in category)
+                {
+                    <div class="badge-card">
+                        <img src="@Url.Content(badge.BadgeImage)" alt="@badge.BadgeName" />
+                        <div class="badge-name">@badge.BadgeName</div>
+                        <div>@badge.BadgeDescription</div>
+                        <div class="eco-points">+@badge.BonusEcoPoints Eco Points</div>
+                    </div>
+                }
+            </div>
+        </section>
+    }
+</div>
