@@ -22,5 +22,6 @@ namespace _20232121_W2052838_PlanitGreen.Models
         
         public List<UserBadge> UserBadge { get; set; } = new List<UserBadge>();
 
+        public List<Review> Reviews { get; set; } = new List<Review>();
     }
 }

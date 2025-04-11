@@ -115,17 +115,22 @@
 			<!-- Add a new review form -->
 			<div class="add-review">
 				<h6 style="color: #01635E">Add a Review</h6>
-				<form>
+				<form asp-action="AddReview" asp-controller="Tour" method="post">
+					<input type="hidden" name="tourId" value="@Model.TourID" />
 					<textarea name="Content" placeholder="Write your review here..." required></textarea>
 					<button type="submit" class="search-submit-btn">Submit Review</button>
 				</form>
 			</div>
+			@if (TempData["ReviewError"] != null)
+			{
+				<p style="color: red;">@TempData["ReviewError"]</p>
+			}
 
 			<!-- Display existing reviews -->
 			@foreach (var review in Model.Reviews.OrderByDescending(r => r.CreatedAt))
 			{
 				<div class="review">
-					<p><strong>@review.User.Username</strong> - @review.CreatedAt.ToString("yyyy-MM-dd")</p>
+					<p><strong>@review.User.Username</strong> @review.CreatedAt.ToString("yyyy-MM-dd")</p>
 					<p>@review.Content</p>
 				</div>
 			}
