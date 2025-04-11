@@ -1,5 +1,6 @@
 ﻿using _20232121_W2052838_PlanitGreen.Data;
 using _20232121_W2052838_PlanitGreen.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace _20232121_W2052838_PlanitGreen.Managers
 {
@@ -98,5 +99,69 @@ namespace _20232121_W2052838_PlanitGreen.Managers
         }
 
 
+        public bool CancelBooking(int bookingId)
+        {
+            var booking = _context.Booking
+                .Include(b => b.Departure)
+                .ThenInclude(d => d.Tour)
+                .ThenInclude(t => t.TourStyle)
+                .Include(b => b.User)
+                .Include(b => b.PassengerList)
+                .FirstOrDefault(b => b.BookingID == bookingId);
+
+            if (booking == null)
+                return false;
+
+            var user = booking.User;
+
+
+            // 1. Refund used eco points
+            var ecoPoints = _context.EcoPoints.FirstOrDefault(e => e.User.UserID == user.UserID);
+            if (ecoPoints != null)
+            {
+                ecoPoints.AvailablePoints += booking.EcoPointsUsed;
+
+                // 2. Deduct earned eco points
+                int ecoPointsEarned = (int)(booking.Departure.Tour.CalculateEcoPoints() * booking.PassengerQty);
+                if (booking.IsPublicTransport)
+                {
+                    ecoPointsEarned = (int)(ecoPointsEarned * 1.5);
+                }
+
+                ecoPoints.TotalPoints -= ecoPointsEarned;
+                ecoPoints.AvailablePoints -= ecoPointsEarned;
+
+                // Make sure points don't go below zero
+                ecoPoints.TotalPoints = Math.Max(ecoPoints.TotalPoints, 0);
+                ecoPoints.AvailablePoints = Math.Max(ecoPoints.AvailablePoints, 0);
+
+                _context.EcoPoints.Update(ecoPoints);
+            }
+
+            // 3. Deduct trees planted
+            int treesToDeduct = (int)(booking.Departure.Tour.TreesPlanted * booking.PassengerQty);
+            user.TreesPlanted -= treesToDeduct;
+            if (user.TreesPlanted < 0) user.TreesPlanted = 0;
+
+            // 4. Restore PacksQty
+            booking.Departure.PacksQty -= booking.PassengerQty;
+            _context.Departure.Update(booking.Departure);
+
+            // 5. Remove passengers
+            _context.Passenger.RemoveRange(booking.PassengerList);
+
+            // 6. Remove the booking
+            _context.Booking.Remove(booking);
+
+            // 7. Save all changes
+            _context.SaveChanges();
+
+            // 8. Re-evaluate badges
+            _badgeEvaluator.EvaluateBadgesAsync(user).Wait();
+
+            return true;
+        }
     }
+
+    
 }

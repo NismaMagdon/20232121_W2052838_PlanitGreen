@@ -25,7 +25,10 @@
                         <img src="~/Images/Header/Wishlist-icon.png" alt="Wishlist" class="icon">My Wishlist
                     </a>
                     
-                    <button id="bookings-header-btn" class="header-btn"><img src="~/Images/Header/Bookings-icon.png" alt="Bookings" class="icon">My Bookings</button>
+                    <a asp-controller="Booking" asp-action="MyBookings" class="header-btn">
+                        <img src="~/Images/Header/Bookings-icon.png" alt="Bookings" class="icon">My Bookings
+                    </a>
+                    
                     @if (Context.Session.GetInt32("UserID") != null)
                     {
                         

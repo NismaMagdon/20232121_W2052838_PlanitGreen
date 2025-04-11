@@ -98,5 +98,55 @@ namespace _20232121_W2052838_PlanitGreen.Controllers
 
             return View(booking);
         }
+
+        [HttpPost]
+        public IActionResult CancelBooking(int id)
+        {
+            var booking = _context.Booking
+                .Include(b => b.Departure)
+                .Include(b => b.Departure.Tour)
+                .Include(b => b.User)
+                .FirstOrDefault(b => b.BookingID == id);
+
+            if (booking == null)
+            {
+                TempData["ErrorMessage"] = "Booking not found.";
+                return RedirectToAction("MyBookings");
+            }
+
+            var bookingManager = new BookingManager(_context, _badgeEvaluator);
+            bool isCancelled = bookingManager.CancelBooking(id);
+
+            if (isCancelled)
+            {
+                TempData["SuccessMessage"] = "Booking cancelled successfully.";
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Cancellation failed.";
+            }
+
+            return RedirectToAction("MyBookings");
+        }
+
+
+        public IActionResult MyBookings()
+        {
+            var userId = HttpContext.Session.GetInt32("UserID");
+            if (userId == null)
+            {
+                // Store the intended dashboard URL in session
+                HttpContext.Session.SetString("ReturnUrl", Url.Action("MyBookings", "Booking"));
+                return RedirectToAction("Login", "Account");
+            }
+
+            var bookings = _context.Booking
+                .Where(b => b.User.UserID == userId)
+                .Include(b => b.Departure)
+                    .ThenInclude(d => d.Tour)
+                .ToList();
+
+            return View(bookings);
+        }
     }
 }

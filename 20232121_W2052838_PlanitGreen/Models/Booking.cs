@@ -15,7 +15,6 @@ namespace _20232121_W2052838_PlanitGreen.Models
         public int EcoPointsUsed { get; set; }
         public double TotalPrice { get; set; }
         
-        [NotMapped]
         public List<Passenger> PassengerList { get; set; } = new List<Passenger>();
     }
 }
