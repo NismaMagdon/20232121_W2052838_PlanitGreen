@@ -2,5 +2,48 @@
 	ViewData["Title"] = "About Page";
 }
 
-<h2>PlanitGreen</h2>
-<p>Use this page to add information about PlanitGreen</p>
+<link rel="stylesheet" href="~/css/about.css" />
+
+<div class="about-banner">
+    <img src="~/images/Home/about-banner.jpg" alt="About Banner">
+    <div class="banner-text">
+        <h1>About PlanitGreen</h1>
+        <p>Your journey to sustainable travel starts here.</p>
+    </div>
+</div>
+
+<div class="about-content">
+    <section>
+        <h2>What is PlanitGreen?</h2>
+        <p>
+            PlanitGreen is a gamified eco-friendly tour booking platform designed to make sustainable travel exciting and rewarding.
+            Our platform allows users to explore curated travel packages that prioritize environmental responsibility.
+        </p>
+    </section>
+
+    <section>
+        <h2>How It Works</h2>
+        <ul>
+            <li>🌍 Book eco-friendly tours with just a few clicks.</li>
+            <li>🎮 Earn points and badges for choosing greener travel options.</li>
+            <li>🌱 Redeem your EcoPoints to access price discounts or plant trees.</li>
+        </ul>
+
+    </section>
+
+    <section>
+        <h2>Why PlanitGreen?</h2>
+        <p>
+            We believe travel can be both fun and planet-friendly. With PlanitGreen, you're not just booking a trip — you're making a difference.
+            Whether you're an eco-warrior or just curious about sustainable travel, we make it easy and rewarding to go green.
+        </p>
+    </section>
+
+    <section class="rewards-link-section">
+        <h2>Ready to turn your trips into rewards?</h2>
+        <p>
+            Start earning EcoPoints and unlock badges for traveling sustainably.
+            <a asp-controller="Home" asp-action="Rewards" class="rewards-link">Check out the Rewards Page</a>
+        </p>
+    </section>
+</div>
