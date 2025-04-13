@@ -21,11 +21,12 @@
             <input type="hidden" name="searchQuery" value="@ViewData["SearchQuery"]" /> <!-- Persist search query -->
 
             <label for="sort">Sort by</label>
-            <select id="sort" name="sortOrder">
-                <option value="ecoPoints">Eco Points: high to low</option>
-                <option value="price-low">Price: low to high</option>
-                <option value="price-high">Price: high to low</option>
-            </select>
+                <select id="sort" name="sortOrder">
+                    <option value="" selected disabled hidden>-- Select sort order --</option>
+                    <option value="ecoPoints">Eco Points: high to low</option>
+                    <option value="price-low">Price: low to high</option>
+                    <option value="price-high">Price: high to low</option>
+                </select>
 
             <label for="startDate">Start Date</label>
             <input type="date" id="startDate" name="startDate" />
@@ -40,13 +41,15 @@
             </div>
 
             <label for="style">Style</label>
-            <select id="style" name="style">
-                <option value="adventure">Adventure</option>
-                <option value="culture">Culture</option>
-                <option value="wildlife">Wildlife</option>
-                <option value="food">Food</option>
-                <option value="leisure">Leisure</option>
-            </select>
+                <select id="style" name="style">
+                    <option value="" selected disabled hidden>-- Select style --</option>
+                    <option value="adventure">Adventure</option>
+                    <option value="culture">Culture</option>
+                    <option value="wildlife">Wildlife</option>
+                    <option value="food">Food</option>
+                    <option value="leisure">Leisure</option>
+                </select>
+
 
             <button type="submit" class="search-submit-btn" style="margin-top: 15px;">Apply Filters</button>
         </form>

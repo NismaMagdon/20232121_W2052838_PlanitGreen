@@ -21,9 +21,10 @@ namespace _20232121_W2052838_PlanitGreen.Managers
         {
             // Eager load related entities like TourStyle and Destination
             var tours = _context.Tour
-                                .Include(t => t.TourStyle)   // Eager load the TourStyle
-                                .Include(t => t.Destination) // Eager load the Destination
-                            
+                                .Include(t => t.TourStyle)   
+                                .Include(t => t.Destination)
+                                .Include(t => t.DepartureList)
+
                                 .AsQueryable();
 
             if (!string.IsNullOrEmpty(searchQuery))
@@ -59,7 +60,8 @@ namespace _20232121_W2052838_PlanitGreen.Managers
             // Eager load related entities like TourStyle, Destination, and ImageList
             var tours = _context.Tour
                                 .Include(t => t.TourStyle)  
-                                .Include(t => t.Destination) 
+                                .Include(t => t.Destination)
+                                .Include(t => t.DepartureList)
                                 .Include(t => t.ImageList)  
                                 .Where(t => t.Destination.DestinationID == destinationId)
                                 .ToList();
@@ -89,7 +91,8 @@ namespace _20232121_W2052838_PlanitGreen.Managers
             // Eager load related entities like TourStyle, Destination, and ImageList
             var tours = _context.Tour
                                 .Include(t => t.TourStyle)   
-                                .Include(t => t.Destination)  
+                                .Include(t => t.Destination)
+                                .Include(t => t.DepartureList)
                                 .Include(t => t.ImageList)   
                                 .Where(t => t.TourStyle.TourStyleID == tourStyleId)
                                 .ToList();
@@ -121,18 +124,19 @@ namespace _20232121_W2052838_PlanitGreen.Managers
             // Apply price range filter
             if (minPrice.HasValue)
             {
-                tours = tours.Where(t => t.Price >= minPrice);
+                tours = tours.Where(t => t.Price >= minPrice.Value);
             }
 
             if (maxPrice.HasValue)
             {
-                tours = tours.Where(t => t.Price <= maxPrice);
+                tours = tours.Where(t => t.Price <= maxPrice.Value);
             }
 
             // Apply style filter
             if (!string.IsNullOrEmpty(style))
             {
-                tours = tours.Where(t => t.TourStyle.TourStyleName == style);
+                tours = tours.Where(t => t.TourStyle != null && t.TourStyle.TourStyleName == style);
+
             }
 
             // Apply date range filters
@@ -150,16 +154,20 @@ namespace _20232121_W2052838_PlanitGreen.Managers
             switch (sortOrder)
             {
                 case "ecoPoints":
-                    tours = tours.OrderByDescending(t => t.CalculateEcoPoints()); // Eco Points: high to low
+                    tours = tours.AsEnumerable()  // Force in-memory evaluation
+                                 .OrderByDescending(t => t.CalculateEcoPoints())
+                                 .AsQueryable();
                     break;
                 case "price-low":
-                    tours = tours.OrderBy(t => t.Price); // Price: low to high
+                    tours = tours.OrderBy(t => t.Price);
                     break;
                 case "price-high":
-                    tours = tours.OrderByDescending(t => t.Price); // Price: high to low
+                    tours = tours.OrderByDescending(t => t.Price);
                     break;
                 default:
-                    tours = tours.OrderByDescending(t => t.CalculateEcoPoints()); // Eco Points: high to low
+                    tours = tours.AsEnumerable()
+                                 .OrderByDescending(t => t.CalculateEcoPoints())
+                                 .AsQueryable();
                     break;
             }
 
