@@ -54,6 +54,65 @@ namespace _20232121_W2052838_PlanitGreen.Managers
 
         }
 
+        public List<Tour> GetToursByDestinationId(int destinationId)
+        {
+            // Eager load related entities like TourStyle, Destination, and ImageList
+            var tours = _context.Tour
+                                .Include(t => t.TourStyle)  
+                                .Include(t => t.Destination) 
+                                .Include(t => t.ImageList)  
+                                .Where(t => t.Destination.DestinationID == destinationId)
+                                .ToList();
+
+            // Associate the first image with each tour if needed (like in GetToursByKeyword)
+            var tourImages = _context.TourImage
+                                     .Where(img => img.Tour != null)
+                                     .ToList();
+
+            foreach (var tour in tours)
+            {
+                // Get the first image for this tour
+                var firstImage = tourImages.FirstOrDefault(img => img.Tour != null && img.Tour.TourID == tour.TourID);
+                if (firstImage != null)
+                {
+                    // Assign the first image to the tour's ImageList if you need it
+                    tour.ImageList = new List<TourImage> { firstImage };
+                }
+            }
+
+            return tours;
+        }
+
+
+        public List<Tour> GetToursByTourStyleId(int tourStyleId)
+        {
+            // Eager load related entities like TourStyle, Destination, and ImageList
+            var tours = _context.Tour
+                                .Include(t => t.TourStyle)   
+                                .Include(t => t.Destination)  
+                                .Include(t => t.ImageList)   
+                                .Where(t => t.TourStyle.TourStyleID == tourStyleId)
+                                .ToList();
+
+            // Associate the first image with each tour if needed (like in GetToursByKeyword)
+            var tourImages = _context.TourImage
+                                     .Where(img => img.Tour != null)
+                                     .ToList();
+
+            foreach (var tour in tours)
+            {
+                // Get the first image for this tour
+                var firstImage = tourImages.FirstOrDefault(img => img.Tour != null && img.Tour.TourID == tour.TourID);
+                if (firstImage != null)
+                {
+                    // Assign the first image to the tour's ImageList if you need it
+                    tour.ImageList = new List<TourImage> { firstImage };
+                }
+            }
+
+            return tours;
+        }
+
 
 
         // Method to apply filters and sorting to the tours

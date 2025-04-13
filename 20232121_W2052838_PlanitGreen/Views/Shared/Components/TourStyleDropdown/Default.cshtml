@@ -1,0 +1,8 @@
+﻿@model IEnumerable<TourStyle>
+
+@foreach (var tourStyle in Model)
+{
+    <a asp-controller="Search" asp-action="ByTourStyle" asp-route-id="@tourStyle.TourStyleID">
+        @tourStyle.TourStyleName
+    </a>
+}

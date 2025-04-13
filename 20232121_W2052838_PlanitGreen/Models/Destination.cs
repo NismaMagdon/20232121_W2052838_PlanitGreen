@@ -9,7 +9,7 @@ namespace _20232121_W2052838_PlanitGreen.Models
         public int DestinationID { get; set; }
         public string DestinationName { get; set; }
 
-        [NotMapped]
+   
         public List<Tour> TourList { get; set; } = new List<Tour>();
     }
 }

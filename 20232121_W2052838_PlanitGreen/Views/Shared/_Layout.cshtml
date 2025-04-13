@@ -55,12 +55,16 @@
                 <div id="header-bar-bottom" class="header-bar-bottom">
                     <a class="nav-btn" asp-controller="Home" asp-action="Index">Home</a>
                     <div class="dropdown">
-                        <button id="destination-btn" class="nav-btn">Destinations</button>
-                        <!-- Dropdown content will be added later -->
+                        <button class="nav-btn">Destinations</button>
+                        <div class="dropdown-content">
+                            @await Component.InvokeAsync("DestinationDropdown")
+                        </div>
                     </div>
                     <div class="dropdown">
                         <button id="styles-btn" class="nav-btn">Travel Styles</button>
-                        <!-- Dropdown content will be added later -->
+                        <div class="dropdown-content">
+                            @await Component.InvokeAsync("TourStyleDropdown")
+                        </div>
                     </div>
                     <a class="nav-btn" asp-controller="Home" asp-action="Rewards">Eco Rewards</a>
                     <a class="nav-btn" asp-controller="Home" asp-action="About">About</a>

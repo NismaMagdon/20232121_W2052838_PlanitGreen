@@ -22,6 +22,7 @@ namespace _20232121_W2052838_PlanitGreen.Controllers
         {
             var tours = searchManager.GetToursByKeyword(searchQuery)?.ToList() ?? new List<Tour>();
 
+           
             // Get the wishlist IDs if user is logged in
             int? userId = HttpContext.Session.GetInt32("UserID");
             List<int> wishlistTourIds = new();
@@ -39,6 +40,48 @@ namespace _20232121_W2052838_PlanitGreen.Controllers
             return View(tours);
         }
 
+
+        public IActionResult ByDestination(int id)
+        {
+            var tours = searchManager.GetToursByDestinationId(id);
+
+            int? userId = HttpContext.Session.GetInt32("UserID");
+            List<int> wishlistTourIds = new();
+
+            if (userId.HasValue)
+            {
+                wishlistTourIds = _context.WishlistItem
+                    .Where(w => w.User.UserID == userId.Value)
+                    .Select(w => w.Tour.TourID)
+                    .ToList();
+            }
+
+            ViewBag.WishlistTourIds = wishlistTourIds;
+            ViewData["SearchQuery"] = null; 
+            return View("SearchResults", tours);
+        }
+
+
+
+        public IActionResult ByTourStyle(int id)
+        {
+            var tours = searchManager.GetToursByTourStyleId(id);
+
+            int? userId = HttpContext.Session.GetInt32("UserID");
+            List<int> wishlistTourIds = new();
+
+            if (userId.HasValue)
+            {
+                wishlistTourIds = _context.WishlistItem
+                    .Where(w => w.User.UserID == userId.Value)
+                    .Select(w => w.Tour.TourID)
+                    .ToList();
+            }
+
+            ViewBag.WishlistTourIds = wishlistTourIds;
+            ViewData["SearchQuery"] = null;
+            return View("SearchResults", tours);
+        }
 
 
         // Action to handle filtering and sorting (POST request)

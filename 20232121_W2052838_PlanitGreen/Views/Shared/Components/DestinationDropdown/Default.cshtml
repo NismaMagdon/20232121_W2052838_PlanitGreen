@@ -1,0 +1,8 @@
+﻿@model IEnumerable<Destination>
+
+@foreach (var destination in Model)
+{
+    <a asp-controller="Search" asp-action="ByDestination" asp-route-id="@destination.DestinationID">
+        @destination.DestinationName
+    </a>
+}
