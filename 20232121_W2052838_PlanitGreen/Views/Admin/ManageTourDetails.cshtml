@@ -1,0 +1,83 @@
+﻿@model _20232121_W2052838_PlanitGreen.Models.Tour
+
+@{
+    ViewData["Title"] = "Manage Tour Details";
+}
+
+@section Scripts{
+    <link rel="stylesheet" href="~/css/manageTour.css" asp-append-version="true" />
+}
+<div class="manage-container">
+    <h2 style="color:#45CA31;">@Model.TourName</h2>
+
+<p>@Model.Description</p>
+<p><strong>Style:</strong> @Model.TourStyle.TourStyleName</p>
+<p><strong>Destination:</strong> @Model.Destination.DestinationName</p>
+<p><strong>Duration:</strong> @Model.Duration days</p>
+<p><strong>Status:</strong> @(Model.IsActive ? "Active" : "Inactive")</p>
+
+<form asp-action="ToggleTourStatus" asp-controller="Admin" method="post">
+    <input type="hidden" name="tourId" value="@Model.TourID" />
+    <button type="submit" class="btn btn-@(Model.IsActive ? "danger" : "success")">
+        @(Model.IsActive ? "Deactivate" : "Activate")
+    </button>
+</form>
+
+<hr />
+
+<h3 style="color:#0A504C;">Departures</h3>
+
+@if (Model.DepartureList.Count == 0)
+{
+    <p>No departures available.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Packs Limit</th>
+                <th>Booked</th>
+                    <th>Bookings</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var dep in Model.DepartureList)
+            {
+                <tr>
+                    <td>@dep.StartDate</td>
+                    <td>@dep.EndDate</td>
+                    <td>@dep.PacksLimit</td>
+                    <td>@dep.PacksQty</td>
+                        <td>
+                            <a asp-controller="Admin" asp-action="ViewDepartureBookings" asp-route-departureId="@dep.DepartureID" class="btn btn-outline-info btn-sm">
+                                See Bookings
+                            </a>
+                        </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+    <h4 style="color:#45CA31;">Add New Departure</h4>
+
+<form asp-controller="Admin" asp-action="AddDeparture" method="post">
+    <input type="hidden" name="tourId" value="@Model.TourID" />
+    <div class="form-group">
+        <label style="font-weight: bold;">Start Date</label>
+        <input type="date" name="StartDate" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label style="font-weight: bold;">End Date</label>
+        <input type="date" name="EndDate" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label style="font-weight: bold;">Packs Limit</label>
+        <input type="number" name="PacksLimit" class="form-control" required />
+    </div><br>
+    <button type="submit" class="search-submit-btn">Add Departure</button>
+</form>
+</div>

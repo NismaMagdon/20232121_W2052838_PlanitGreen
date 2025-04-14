@@ -60,6 +60,7 @@ namespace _20232121_W2052838_PlanitGreen.Controllers
         public IActionResult Logout()
         {
             HttpContext.Session.Remove("UserID"); // Clear session
+            HttpContext.Session.Remove("UserRole");
             return RedirectToAction("Index", "Home");
         }
 
@@ -88,6 +89,22 @@ namespace _20232121_W2052838_PlanitGreen.Controllers
             // After successful registration, redirect to Login page
             return RedirectToAction("Login");
 
+        }
+
+        [HttpPost]
+        public IActionResult RegisterAdmin(User user)
+        {
+            if (authenticator.IsUsernameTaken(user.Username))
+            {
+                TempData["ErrorMessage"] = "This username already exists.";
+                return RedirectToAction("ManageAccounts", "Admin");
+            }
+
+            user.Role = Role.Admin;
+            userManager.RegisterUser(user);
+
+            TempData["SuccessMessage"] = "Admin account created successfully!";
+            return RedirectToAction("ManageAccounts", "Admin");
         }
     }
 }

@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Impact Dashboard";
+}
+
+@section Scripts{
+    <link rel="stylesheet" href="~/css/impactDashboard.css" asp-append-version="true" />
+}
+
+<h2 style="color: #0A504C; text-align:center;">PlanitGreen Impact Dashboard</h2>
+
+<div class="impact-stats">
+    <div class="stat-card">
+        <h3>Total Trees Planted</h3>
+        <img src="~/images/Game/treeGrow.gif" alt="Trees Planted" class="stat-icon" />
+        <p>@ViewBag.TotalTrees</p>
+    </div>
+
+    <div class="stat-card">
+        <h3>Public Transport Bookings</h3>
+        <img src="~/images/Game/transport.gif" alt="Public Transport" class="stat-icon" />
+        <p>@ViewBag.PublicTransportBookings</p>
+    </div>
+
+    <div class="stat-card">
+        <h3>Total Eco Points Donated</h3>
+        <img src="~/images/Game/coin.gif" alt="Eco Points" class="stat-icon" />
+        <p>@ViewBag.TotalEcoPoints</p>
+    </div>
+</div>
+

@@ -22,7 +22,9 @@ namespace _20232121_W2052838_PlanitGreen.Controllers
         // Action to handle the initial search (GET request)
         public IActionResult SearchResults(string searchQuery)
         {
-            var tours = searchManager.GetToursByKeyword(searchQuery)?.ToList() ?? new List<Tour>();
+            var tours = searchManager.GetToursByKeyword(searchQuery)
+                ?.Where(t => t.IsActive)
+                .ToList() ?? new List<Tour>();
 
            
             // Get the wishlist IDs if user is logged in
@@ -45,7 +47,9 @@ namespace _20232121_W2052838_PlanitGreen.Controllers
 
         public IActionResult ByDestination(int id)
         {
-            var tours = searchManager.GetToursByDestinationId(id);
+            var tours = searchManager.GetToursByDestinationId(id)
+                ?.Where(t => t.IsActive);  // Only include active tours
+              
 
             int? userId = HttpContext.Session.GetInt32("UserID");
             List<int> wishlistTourIds = new();
@@ -67,7 +71,9 @@ namespace _20232121_W2052838_PlanitGreen.Controllers
 
         public IActionResult ByTourStyle(int id)
         {
-            var tours = searchManager.GetToursByTourStyleId(id);
+            var tours = searchManager.GetToursByTourStyleId(id)
+                ?.Where(t => t.IsActive);  // Only include active tours
+       
 
             int? userId = HttpContext.Session.GetInt32("UserID");
             List<int> wishlistTourIds = new();
