@@ -33,8 +33,9 @@ namespace _20232121_W2052838_PlanitGreen.Controllers
                 return View();
             }
 
-            // Store the user ID in session to track login status
+            // Store the user ID and role in session to track login status
             HttpContext.Session.SetInt32("UserID", user.UserID);
+            HttpContext.Session.SetInt32("UserRole", (int)user.Role);
 
             // Check if a return URL exists in session
             string? returnUrl = HttpContext.Session.GetString("ReturnUrl");
@@ -46,9 +47,15 @@ namespace _20232121_W2052838_PlanitGreen.Controllers
                 return Redirect(returnUrl);
             }
 
-            // Redirect to home page after successful login - CHECK AGAIN
+            if (user.Role == Role.Admin)
+            {
+                return RedirectToAction("Dashboard", "Admin");
+            }
+
+            // Redirect to home page after successful login
             return RedirectToAction("Index", "Home");
         }
+
 
         public IActionResult Logout()
         {

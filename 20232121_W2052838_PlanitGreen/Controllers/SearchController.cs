@@ -1,4 +1,5 @@
 ﻿using _20232121_W2052838_PlanitGreen.Data;
+using _20232121_W2052838_PlanitGreen.Filters;
 using _20232121_W2052838_PlanitGreen.Managers;
 using _20232121_W2052838_PlanitGreen.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -6,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace _20232121_W2052838_PlanitGreen.Controllers
 {
+    [RejectIfAdmin]
     public class SearchController : Controller
     {
         private readonly SearchManager searchManager;

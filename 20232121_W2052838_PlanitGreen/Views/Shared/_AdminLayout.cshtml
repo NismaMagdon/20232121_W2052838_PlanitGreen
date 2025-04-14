@@ -1,0 +1,63 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PlanitGreen Admin</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/_20232121_W2052838_PlanitGreen.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <div class="header">
+            <div id="logo-container" class="logo-container">
+                <img id="logo" src="~/Images/Header/Logo.png" alt="PlanitGreen Logo">
+            </div>
+
+            <div id="header-bar" class="header-bar">
+                <div id="header-bar-top" class="header-bar-top d-flex justify-content-end">
+                    <a asp-controller="Account" asp-action="Logout" class="header-btn">
+                        <img src="~/Images/Header/Login-icon.png" alt="Logout" class="icon">Logout
+                    </a>
+                </div>
+
+
+                    <div id="header-bar-middle" class="header-bar-middle">
+                        
+                    </div>
+
+
+                <div id="header-bar-bottom" class="header-bar-bottom d-flex">
+                    <a class="nav-btn" asp-controller="Admin" asp-action="Dashboard">Home</a>
+                    <a class="nav-btn" asp-controller="Admin" asp-action="ManageTours">Manage Tours</a>
+                    <a class="nav-btn" asp-controller="Admin" asp-action="ManageDepartures">Manage Departures</a>
+                    <a class="nav-btn" asp-controller="Admin" asp-action="ManageBookings">Manage Bookings</a>
+                    <a class="nav-btn" asp-controller="Admin" asp-action="ManageAccounts">Manage Accounts</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container-fluid">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer id="footer" class="border-top footer text-muted">
+        <div class="footer">
+            &copy; 2025 - PlanitGreen Admin
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

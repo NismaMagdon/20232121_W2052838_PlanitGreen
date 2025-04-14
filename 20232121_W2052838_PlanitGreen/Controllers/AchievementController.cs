@@ -1,4 +1,5 @@
 ﻿using _20232121_W2052838_PlanitGreen.Data;
+using _20232121_W2052838_PlanitGreen.Filters;
 using _20232121_W2052838_PlanitGreen.Managers;
 using _20232121_W2052838_PlanitGreen.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,7 @@ using System;
 
 namespace _20232121_W2052838_PlanitGreen.Controllers
 {
+    [RejectIfAdmin]
     public class AchievementController : Controller
     {
 
@@ -48,6 +50,7 @@ namespace _20232121_W2052838_PlanitGreen.Controllers
 
             var leaderboard = _context.User
                 .Include(u => u.UserBadge)
+                .Where(u => u.Role != Role.Admin)
                 .Join(_context.EcoPoints,
                     user => user.UserID,
                     eco => eco.User.UserID,

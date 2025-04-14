@@ -1,0 +1,49 @@
+﻿@model IEnumerable<_20232121_W2052838_PlanitGreen.Models.Tour>
+
+@{
+    ViewData["Title"] = "Manage Tours";
+}
+
+<style>
+    .tour-card-container {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: transform 0.2s ease-in-out;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        width: auto;
+        max-width: 350px;
+    }
+
+        .tour-card-container:hover {
+            transform: translateY(-5px);
+        }
+</style>
+
+<h2 style="color:#0A504C;">Manage Tours</h2>
+<br>
+
+<form asp-controller="Admin" asp-action="ManageTours" method="get">
+    <input type="text" name="searchQuery" id="search-bar" class="search-bar" placeholder="Find your next green adventure...">
+    <button id="search-btn" class="search-submit-btn" style="margin-left: 10px;">Search</button>
+</form>
+<br>
+
+<div class="row" id="tourCards">
+    @foreach (var tour in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <a style="text-decoration: none; color: inherit;">
+                <div class="tour-card-container">
+                    <h3 style="color:#45CA31;">@tour.TourName</h3>
+                    <p><strong>Style:</strong> @tour.TourStyle.TourStyleName</p>
+                    <p><strong>Destination:</strong> @tour.Destination.DestinationName</p>
+                    <p><strong>Duration:</strong> @tour.Duration Days</p>
+                </div>
+            </a>
+        </div>
+    }
+</div>
