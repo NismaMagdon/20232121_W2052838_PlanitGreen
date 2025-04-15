@@ -72,10 +72,13 @@ namespace _20232121_W2052838_PlanitGreen.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddDeparture(int tourId, DateOnly StartDate, DateOnly EndDate, int PacksLimit)
+        public IActionResult AddDeparture(int tourId, DateOnly StartDate, int PacksLimit)
         {
             var tour = _context.Tour.Include(t => t.DepartureList).FirstOrDefault(t => t.TourID == tourId);
             if (tour == null) return NotFound();
+
+            // Calculate end date based on tour duration
+            DateOnly EndDate = StartDate.AddDays(tour.Duration - 1);
 
             var newDeparture = new Departure
             {
@@ -90,6 +93,7 @@ namespace _20232121_W2052838_PlanitGreen.Controllers
             tour.DepartureList.Add(newDeparture);
             _context.SaveChanges();
 
+            TempData["SuccessMessage"] = $"Departure added: {StartDate} to {EndDate}";
             return RedirectToAction("ManageTourDetails", new { id = tourId });
         }
 

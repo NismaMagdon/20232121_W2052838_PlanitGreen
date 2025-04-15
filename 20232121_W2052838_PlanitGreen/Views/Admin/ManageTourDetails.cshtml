@@ -9,6 +9,18 @@
 }
 <div class="manage-container">
     <h2 style="color:#45CA31;">@Model.TourName</h2>
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["SuccessMessage"]
+        </div>
+    }
 
 <p>@Model.Description</p>
 <p><strong>Style:</strong> @Model.TourStyle.TourStyleName</p>
@@ -69,10 +81,6 @@ else
     <div class="form-group">
         <label style="font-weight: bold;">Start Date</label>
         <input type="date" name="StartDate" class="form-control" required />
-    </div>
-    <div class="form-group">
-        <label style="font-weight: bold;">End Date</label>
-        <input type="date" name="EndDate" class="form-control" required />
     </div>
     <div class="form-group">
         <label style="font-weight: bold;">Packs Limit</label>
