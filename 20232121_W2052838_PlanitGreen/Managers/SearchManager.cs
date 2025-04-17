@@ -55,16 +55,16 @@ namespace _20232121_W2052838_PlanitGreen.Managers
 
         }
 
-        public List<Tour> GetToursByDestinationId(int destinationId)
+        public IQueryable<Tour> GetToursByDestinationId(int destinationId)
         {
             // Eager load related entities like TourStyle, Destination, and ImageList
             var tours = _context.Tour
-                                .Include(t => t.TourStyle)  
+                                .Include(t => t.TourStyle)
                                 .Include(t => t.Destination)
                                 .Include(t => t.DepartureList)
-                                .Include(t => t.ImageList)  
-                                .Where(t => t.Destination.DestinationID == destinationId)
-                                .ToList();
+                                .Include(t => t.ImageList)
+                                .Where(t => t.Destination.DestinationID == destinationId);
+                                
 
             // Associate the first image with each tour if needed (like in GetToursByKeyword)
             var tourImages = _context.TourImage
@@ -86,16 +86,16 @@ namespace _20232121_W2052838_PlanitGreen.Managers
         }
 
 
-        public List<Tour> GetToursByTourStyleId(int tourStyleId)
+        public IQueryable<Tour> GetToursByTourStyleId(int tourStyleId)
         {
             // Eager load related entities like TourStyle, Destination, and ImageList
             var tours = _context.Tour
-                                .Include(t => t.TourStyle)   
+                                .Include(t => t.TourStyle)
                                 .Include(t => t.Destination)
                                 .Include(t => t.DepartureList)
-                                .Include(t => t.ImageList)   
-                                .Where(t => t.TourStyle.TourStyleID == tourStyleId)
-                                .ToList();
+                                .Include(t => t.ImageList)
+                                .Where(t => t.TourStyle.TourStyleID == tourStyleId);
+                                
 
             // Associate the first image with each tour if needed (like in GetToursByKeyword)
             var tourImages = _context.TourImage
