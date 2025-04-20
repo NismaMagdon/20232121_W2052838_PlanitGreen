@@ -19,7 +19,7 @@
     <div class="filters-and-results">
     <div class="filters-container">
      
-        <form method="post" asp-controller="Search" asp-action="FilterAndSort">
+        <form method="get" asp-controller="Search" asp-action="FilterAndSort">
             <input type="hidden" name="searchQuery" value="@ViewData["SearchQuery"]" /> <!-- Persist search query -->
             <input type="hidden" name="destinationId" value="@ViewData["DestinationId"]" />
             <input type="hidden" name="tourStyleId" value="@ViewData["TourStyleId"]" />

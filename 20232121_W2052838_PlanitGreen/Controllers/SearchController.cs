@@ -99,50 +99,55 @@ namespace _20232121_W2052838_PlanitGreen.Controllers
         }
 
 
-        // Action to handle filtering and sorting (POST request)
-        [HttpPost]
+        // Action to handle filtering and sorting
+       
         public IActionResult FilterAndSort(string? searchQuery, int? destinationId, int? tourStyleId, double? minPrice, double? maxPrice, string? style, DateOnly? startDate, DateOnly? endDate, string? sortOrder)
         {
+            IQueryable<Tour> tours;
+
             if (!string.IsNullOrEmpty(searchQuery))
             {
-                var tours = searchManager.GetToursByKeyword(searchQuery);  // Returns IQueryable<Tour>
-                tours = searchManager.ApplyFilterAndSort(tours, sortOrder, minPrice, maxPrice, style, startDate, endDate);  // Apply filters/sorting
-                ViewData["SearchQuery"] = searchQuery;
-                ViewData["DestinationId"] = destinationId;
-                ViewData["TourStyleId"] = tourStyleId;
-                return View("SearchResults", tours.ToList());  // Convert to List<Tour> to pass to the view
+                tours = searchManager.GetToursByKeyword(searchQuery);
             }
             else if (destinationId.HasValue)
             {
-                var tours = searchManager.GetToursByDestinationId(destinationId.Value);
-                tours = searchManager.ApplyFilterAndSort(tours, sortOrder, minPrice, maxPrice, style, startDate, endDate);  // Apply filters/sorting
-                ViewData["SearchQuery"] = searchQuery;
-                ViewData["DestinationId"] = destinationId;
-                ViewData["TourStyleId"] = tourStyleId;
-                return View("SearchResults", tours.ToList());  // Convert to List<Tour> to pass to the view
+                tours = searchManager.GetToursByDestinationId(destinationId.Value);
             }
             else if (tourStyleId.HasValue)
             {
-                var tours = searchManager.GetToursByTourStyleId(tourStyleId.Value);
-                tours = searchManager.ApplyFilterAndSort(tours, sortOrder, minPrice, maxPrice, style, startDate, endDate);  // Apply filters/sorting
-                ViewData["SearchQuery"] = searchQuery;
-                ViewData["DestinationId"] = destinationId;
-                ViewData["TourStyleId"] = tourStyleId;
-                return View("SearchResults", tours.ToList());  // Convert to List<Tour> to pass to the view
+                tours = searchManager.GetToursByTourStyleId(tourStyleId.Value);
             }
             else
             {
-                var tours = searchManager.GetToursByKeyword(searchQuery);
-                tours = searchManager.ApplyFilterAndSort(tours, sortOrder, minPrice, maxPrice, style, startDate, endDate);  // Apply filters/sorting
-                ViewData["SearchQuery"] = searchQuery;
-                ViewData["DestinationId"] = destinationId;
-                ViewData["TourStyleId"] = tourStyleId;
-                return View("SearchResults", tours.ToList());  // Convert to List<Tour> to pass to the view
+                tours = searchManager.GetToursByKeyword(searchQuery); // fallback for empty search
             }
 
-            
+            // Apply filters
+            tours = searchManager.ApplyFilterAndSort(tours, sortOrder, minPrice, maxPrice, style, startDate, endDate);
 
-            
+            // Get the wishlist IDs after applying the filter and sorting
+            int? userId = HttpContext.Session.GetInt32("UserID");
+            List<int> wishlistTourIds = new();
+
+            if (userId.HasValue)
+            {
+                wishlistTourIds = _context.WishlistItem
+                    .Where(w => w.User.UserID == userId.Value)
+                    .Select(w => w.Tour.TourID)
+                    .ToList();
+            }
+
+            // Pass data back
+            ViewBag.WishlistTourIds = wishlistTourIds;
+            ViewData["SearchQuery"] = searchQuery;
+            ViewData["DestinationId"] = destinationId;
+            ViewData["TourStyleId"] = tourStyleId;
+
+            return View("SearchResults", tours.ToList());
+
+
+
+
         }
     }
 }
