@@ -41,24 +41,27 @@ namespace _20232121_W2052838_PlanitGreen.Managers
                 string criteriaType = entry.Key;
                 int userValue = entry.Value;
 
-                var matchingBadges = await _context.Badge
-                .Where(b => b.CriteriaType == criteriaType && userValue >= b.ThresholdValue)
-                .ToListAsync();
+                // Get all badges for this criteria
+                var allBadges = await _context.Badge
+                    .Where(b => b.CriteriaType == criteriaType)
+                    .ToListAsync();
 
-                foreach (var badge in matchingBadges)
+                foreach (var badge in allBadges)
                 {
-                    bool alreadyHas = await _context.UserBadge
-                    .AnyAsync(ub => ub.User.UserID == userId && ub.Badge.BadgeID == badge.BadgeID);
+                    bool qualifies = userValue >= badge.ThresholdValue;
+                    var userBadge = await _context.UserBadge
+                        .FirstOrDefaultAsync(ub => ub.User.UserID == userId && ub.Badge.BadgeID == badge.BadgeID);
 
-                    if (!alreadyHas)
+                    if (qualifies && userBadge == null)
                     {
+                        // Grant badge
                         _context.UserBadge.Add(new UserBadge
                         {
                             User = user,
                             Badge = badge
                         });
 
-                        // Add eco points if applicable
+                        // Add eco points
                         if (badge.BonusEcoPoints > 0)
                         {
                             var ecoPoints = await _context.EcoPoints.FirstOrDefaultAsync(e => e.User.UserID == userId);
@@ -67,6 +70,18 @@ namespace _20232121_W2052838_PlanitGreen.Managers
                                 ecoPoints.TotalPoints += badge.BonusEcoPoints;
                                 ecoPoints.AvailablePoints += badge.BonusEcoPoints;
                             }
+                        }
+                    }
+                    else if (!qualifies && userBadge != null)
+                    {
+                        // Revoke badge
+                        _context.UserBadge.Remove(userBadge);
+
+                        var ecoPoints = await _context.EcoPoints.FirstOrDefaultAsync(e => e.User.UserID == userId);
+                        if (ecoPoints != null && badge.BonusEcoPoints > 0)
+                        {
+                            ecoPoints.TotalPoints -= badge.BonusEcoPoints;
+                            ecoPoints.AvailablePoints = Math.Max(0, ecoPoints.AvailablePoints - badge.BonusEcoPoints);
                         }
                     }
                 }
