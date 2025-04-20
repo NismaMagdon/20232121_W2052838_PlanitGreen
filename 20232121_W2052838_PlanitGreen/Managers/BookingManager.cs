@@ -32,10 +32,12 @@ namespace _20232121_W2052838_PlanitGreen.Managers
                 return null;
             }
 
+            //Computation of total price
             double initialPrice = departure.Tour.Price * passengerCount;
             double discount = redeemPoints / 10;
             double totalPrice = initialPrice - discount;
 
+            //Computation of eco points earned
             int ecoPointsEarned = (int)(departure.Tour.CalculateEcoPoints() * passengerCount);
             if (IsPublicTransport)
             {
@@ -83,10 +85,8 @@ namespace _20232121_W2052838_PlanitGreen.Managers
             int treesEarned = (int)(departure.Tour.TreesPlanted * passengerCount);
             user.TreesPlanted += treesEarned;
 
-            // Reduce the PacksQty by the number of passengers
+            // Increase the PacksQty by the number of passengers
             departure.PacksQty += passengerCount;
-
-            // Update the departure's PacksQty in the database
             _context.Departure.Update(departure);
 
 

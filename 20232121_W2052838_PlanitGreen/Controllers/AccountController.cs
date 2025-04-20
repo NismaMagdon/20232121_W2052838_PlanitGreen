@@ -29,7 +29,7 @@ namespace _20232121_W2052838_PlanitGreen.Controllers
             var user = authenticator.AuthenticateUser(username, password);
 
             if (user == null) {
-                ViewData["ErrorMessage"] = "Invalid username or password."; //CHECK
+                ViewData["ErrorMessage"] = "Invalid username or password.";
                 return View();
             }
 

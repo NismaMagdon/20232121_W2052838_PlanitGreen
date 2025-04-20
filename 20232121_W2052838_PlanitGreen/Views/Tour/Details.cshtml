@@ -143,7 +143,11 @@
 
 		<div class="right-section">
 			<div class="reward-price">
-				<span class="eco-points @(Model.CalculateEcoPoints() >= 170 ? "high-eco" : "low-eco")">@Model.CalculateEcoPoints() Eco Points</span>
+			<span class="eco-points
+				@(Model.CalculateEcoPoints() < 110 ? "low-eco" :
+					(Model.CalculateEcoPoints() >= 110 && Model.CalculateEcoPoints() < 140 ? "moderate-eco" : "high-eco"))">
+				@Model.CalculateEcoPoints() Eco Points
+			</span>
 				<span style="font-weight: bold;">USD $ @Model.Price</span>
 			</div>
 

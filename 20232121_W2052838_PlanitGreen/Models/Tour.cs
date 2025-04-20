@@ -1,4 +1,5 @@
 ﻿using _20232121_W2052838_PlanitGreen.Managers;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -33,23 +34,26 @@ namespace _20232121_W2052838_PlanitGreen.Models
             int baseEcoPoints = 100; // Every tour gets at least 100 points
 
             // Factor 1: Carbon Footprint Reduction
-            double averageCarbonFootprint = 100.0; // Assume an avg carbon footprint of 50kg
+            const double benchmarkFootprint = 100.0; // A reference value for comparison
 
-            if ((averageCarbonFootprint - this.CarbonFootprint) > 0)
+            double carbonSavings = benchmarkFootprint - this.CarbonFootprint;
+
+            if (carbonSavings > 0)
             {
-                baseEcoPoints += (int)(averageCarbonFootprint - this.CarbonFootprint);
+                baseEcoPoints += (int)carbonSavings;
             }
 
-            //Factor 2: Tour duration
-            if (this.Duration > 7) // If the trip duration is more than 7 days, add points
+            //Factor 2: Tour duration - Longer tours are rewarded
+            int extraDays = Duration - 7;
+            if (extraDays > 0)
             {
-                baseEcoPoints += (this.Duration - 7) * 2;
+                baseEcoPoints += extraDays * 2;
             }
 
-            //Factor 3: Tree planting
+            //Factor 3: Tree planting incentives
             baseEcoPoints += this.TreesPlanted * 5; //5 points per tree planted
 
-            //Factor 4: Tour style
+            //Factor 4: Tour style adjustment
             switch(this.TourStyle.TourStyleName)
             {
 
@@ -61,6 +65,8 @@ namespace _20232121_W2052838_PlanitGreen.Models
 
             return baseEcoPoints;
         }
+
+    
 
 
     }
