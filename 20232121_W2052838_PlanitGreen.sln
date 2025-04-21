@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35707.178 d17.12
+VisualStudioVersion = 17.12.35707.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "20232121_W2052838_PlanitGreen", "20232121_W2052838_PlanitGreen\20232121_W2052838_PlanitGreen.csproj", "{67405850-3F30-4517-9D34-B84B0D6A38A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "20232121_W2052838_PlanitGreen.Tests", "20232121_W2052838_PlanitGreen.Tests\20232121_W2052838_PlanitGreen.Tests.csproj", "{6D35120E-66F2-4A94-944D-2C3DA6BBC032}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{67405850-3F30-4517-9D34-B84B0D6A38A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{67405850-3F30-4517-9D34-B84B0D6A38A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{67405850-3F30-4517-9D34-B84B0D6A38A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D35120E-66F2-4A94-944D-2C3DA6BBC032}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D35120E-66F2-4A94-944D-2C3DA6BBC032}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D35120E-66F2-4A94-944D-2C3DA6BBC032}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D35120E-66F2-4A94-944D-2C3DA6BBC032}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
