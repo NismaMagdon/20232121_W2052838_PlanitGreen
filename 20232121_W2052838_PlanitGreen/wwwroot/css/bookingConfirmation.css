@@ -21,7 +21,7 @@
     border-radius: 12px;
     padding: 20px;
     box-shadow: 0 4px 10px rgba(0, 128, 0, 0.05);
-    width: 48%;/* Makes both sections take up 48% of the container width */
+    width: 48%;
 }
 
     .confirmation-summary p,

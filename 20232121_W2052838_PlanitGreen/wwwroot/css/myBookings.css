@@ -16,8 +16,8 @@
     display: flex;
     flex-direction: column;
     padding: 20px;
-    width: auto; /* Ensures card fits content */
-    max-width: 350px; /* Optional: max width of cards */
+    width: auto; 
+    max-width: 350px; 
 }
 
     .booking-card:hover {
@@ -46,7 +46,7 @@
     background-color: red;
     color: white;
     font-weight: bold;
-    padding: 6px 12px; /* Reduced padding for better fit */
+    padding: 6px 12px; 
     cursor: pointer;
     border: none;
     border-radius: 20px;

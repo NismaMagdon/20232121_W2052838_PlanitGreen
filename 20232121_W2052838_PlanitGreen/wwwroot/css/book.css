@@ -91,13 +91,13 @@ h5 {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 48%; /* Adjust width for the two columns */
+    width: 48%; 
 }
 
     .reward-column img {
         width: 70px;
         height: 70px;
-        margin-bottom: 10px; /* Add space between image and text */
+        margin-bottom: 10px; 
     }
 
     .reward-column p {  
@@ -111,20 +111,20 @@ h5 {
 
 @media (max-width: 768px) {
     .bookingForm {
-        flex-direction: column; /* Stack panels on small screens */
+        flex-direction: column; 
     }
 
     .left-panel,
     .right-panel {
-        width: 100%; /* Full width on mobile */
+        width: 100%; 
     }
 
     .reward-section {
-        flex-direction: column; /* Stack columns on small screens */
+        flex-direction: column; 
     }
 
     .reward-column {
-        width: 100%; /* Full width for each column */
-        margin-bottom: 15px; /* Add space between stacked columns */
+        width: 100%;
+        margin-bottom: 15px; 
     }
 }

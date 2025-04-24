@@ -42,6 +42,7 @@ namespace _20232121_W2052838_PlanitGreen.Controllers
             return View(wishlistTours);
         }
 
+
         // Action to add a tour to the wishlist
         [HttpPost]
         public IActionResult AddToWishlist(int tourId)

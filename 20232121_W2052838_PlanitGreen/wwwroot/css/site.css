@@ -144,7 +144,7 @@ body {
 
 /* Add space below the header (ensure no overlap) */
 main {
-    margin-top: 50px; /* Ensure space for header height */
+    margin-top: 50px; 
 }
 
 /* Focus Styling for Buttons */

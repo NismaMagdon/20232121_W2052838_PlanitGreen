@@ -91,6 +91,7 @@ namespace _20232121_W2052838_PlanitGreen.Controllers
 
         }
 
+        // Registration logic for admin user
         [HttpPost]
         public IActionResult RegisterAdmin(User user)
         {

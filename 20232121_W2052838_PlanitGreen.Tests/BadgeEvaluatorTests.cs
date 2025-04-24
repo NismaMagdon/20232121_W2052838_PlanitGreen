@@ -170,8 +170,8 @@ namespace _20232121_W2052838_PlanitGreen.Tests
 
             // Assert
             var userBadge = _context.UserBadge
-        .Include(ub => ub.User)    // Eagerly load the related User
-        .Include(ub => ub.Badge)   // Eagerly load the related Badge
+        .Include(ub => ub.User)   
+        .Include(ub => ub.Badge) 
         .FirstOrDefault(ub => ub.User.UserID == 78 && ub.Badge.BadgeID == 78);
             Assert.IsNotNull(userBadge, "Badge was not granted to the user");
             Assert.AreEqual(50, ecoPoints.TotalPoints);
@@ -199,7 +199,7 @@ namespace _20232121_W2052838_PlanitGreen.Tests
             };
             _context.User.Add(user);
 
-            // Create supporting data
+            // Create a Destination and TourStyle for the Tour
             var destination = new Destination
             {
                 DestinationID = 56,
@@ -215,6 +215,7 @@ namespace _20232121_W2052838_PlanitGreen.Tests
             };
             _context.TourStyle.Add(tourStyle);
 
+            // Add a Tour
             var tour = new Tour
             {
                 TourID = 56,
@@ -230,6 +231,7 @@ namespace _20232121_W2052838_PlanitGreen.Tests
             };
             _context.Tour.Add(tour);
 
+            // Add a Departure
             var departure = new Departure
             {
                 DepartureID = 56,
@@ -242,7 +244,7 @@ namespace _20232121_W2052838_PlanitGreen.Tests
             };
             _context.Departure.Add(departure);
 
-            // Only one booking with public transport (criteria not met)
+            // Create two bookings but only one booking with public transport (criteria not met)
             _context.Booking.AddRange(
                 new Booking
                 {
@@ -266,6 +268,7 @@ namespace _20232121_W2052838_PlanitGreen.Tests
                 }
             );
 
+            // Create a Badge
             var badge = new Badge
             {
                 BadgeID = 56,
@@ -279,6 +282,7 @@ namespace _20232121_W2052838_PlanitGreen.Tests
             };
             _context.Badge.Add(badge);
 
+            // Create EcoPoints instance
             var ecoPoints = new EcoPoints
             {
                 PointsID = 56,
@@ -295,9 +299,9 @@ namespace _20232121_W2052838_PlanitGreen.Tests
 
             // Assert
             var userBadge = _context.UserBadge
-    .Include(ub => ub.User)    // Eagerly load the related User
-    .Include(ub => ub.Badge)   // Eagerly load the related Badge
-    .FirstOrDefault(ub => ub.User.UserID == 56 && ub.Badge.BadgeID == 56);
+        .Include(ub => ub.User)   
+        .Include(ub => ub.Badge)   
+        .FirstOrDefault(ub => ub.User.UserID == 56 && ub.Badge.BadgeID == 56);
             Assert.IsNull(userBadge, "Badge should not be assigned.");
             Assert.AreEqual(0, ecoPoints.TotalPoints);
             Assert.AreEqual(0, ecoPoints.AvailablePoints);
@@ -444,8 +448,8 @@ namespace _20232121_W2052838_PlanitGreen.Tests
 
             // Assert
             var allUserBadges = _context.UserBadge
-                .Include(ub => ub.User)    // Eagerly load the related User
-    .Include(ub => ub.Badge)   // Eagerly load the related Badge
+                .Include(ub => ub.User)  
+                .Include(ub => ub.Badge)  
                 .Where(ub => ub.User.UserID == 44 && ub.Badge.BadgeID == 44)
                 .ToList();
             Assert.AreEqual(1, allUserBadges.Count, "Duplicate badge should not be granted.");
@@ -530,8 +534,8 @@ namespace _20232121_W2052838_PlanitGreen.Tests
 
             // Assert: Badge should be granted
             var userBadge = _context.UserBadge.Include(ub => ub.User)    // Eagerly load the related User
-    .Include(ub => ub.Badge)   // Eagerly load the related Badge
-    .FirstOrDefault(ub => ub.User.UserID == 33 && ub.Badge.BadgeID == 36);
+                .Include(ub => ub.Badge)   // Eagerly load the related Badge
+                .FirstOrDefault(ub => ub.User.UserID == 33 && ub.Badge.BadgeID == 36);
             Assert.IsNotNull(userBadge, "Badge Collector was not assigned.");
             Assert.AreEqual(15, ecoPoints.TotalPoints);
         }

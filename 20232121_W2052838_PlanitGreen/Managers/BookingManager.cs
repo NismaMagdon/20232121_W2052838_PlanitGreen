@@ -44,7 +44,7 @@ namespace _20232121_W2052838_PlanitGreen.Managers
                 ecoPointsEarned = (int)(ecoPointsEarned * 1.5);
             }
 
-            //Create booking
+            // 1. Create booking
             var booking = new Booking
             {
                 Departure = departure,
@@ -58,7 +58,7 @@ namespace _20232121_W2052838_PlanitGreen.Managers
             _context.Booking.Add(booking);
             _context.SaveChanges();
 
-            //Create passenger instances
+            // 2. Create passenger instances
             foreach (var passenger in Passengers)
             {
                 var passengerEntity = new Passenger
@@ -72,7 +72,7 @@ namespace _20232121_W2052838_PlanitGreen.Managers
                 _context.Passenger.Add(passengerEntity);
             }
 
-            //Update eco points earned
+            // 3. Update eco points earned
             var ecoPoints = _context.EcoPoints.FirstOrDefault(e => e.User.UserID == user.UserID);
             if (ecoPoints != null)
             {
@@ -81,18 +81,18 @@ namespace _20232121_W2052838_PlanitGreen.Managers
                 _context.EcoPoints.Update(ecoPoints);
             }
 
-            //Update trees planted
+            // 4. Update trees planted
             int treesEarned = (int)(departure.Tour.TreesPlanted * passengerCount);
             user.TreesPlanted += treesEarned;
 
-            // Increase the PacksQty by the number of passengers
+            // 5. Increase the PacksQty by the number of passengers
             departure.PacksQty += passengerCount;
             _context.Departure.Update(departure);
 
 
             _context.SaveChanges();
 
-            // Evaluate and award badges after the booking is made
+            // 6. Evaluate and award badges after the booking is made
             _badgeEvaluator.EvaluateBadgesAsync(user).Wait();
 
             return booking;
