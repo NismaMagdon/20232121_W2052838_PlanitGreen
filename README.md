@@ -25,3 +25,10 @@ Steps to Set Up
 	
 4. Run the project.
 	- Build and run the project from Visual Studio
+
+Note:
+If NuGet packages do not automatically restore, go to Tools > NuGet Package Manager > Manage NuGet Packages for Solution and click Restore.
+
+Prerequisites:
+Visual Studio 2022 installed (With ASP.NET and web development workload).
+SQL Server LocalDB installed (Usually comes by default with Visual Studio).
