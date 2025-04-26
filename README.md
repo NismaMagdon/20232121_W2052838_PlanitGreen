@@ -11,7 +11,7 @@ Steps to Set Up
 	- Right-click on Data Connections and select Add Connection
 	- In the window that appears:
 		- Set the Data source to Microsoft SQL Server Database Files
-		- Browse and add the .mdf file extracted from the repository
+		- Browse and add the PlanitGreenDB.mdf file extracted from the repository
 		- Use Windows authentication
 		- Click Ok to attach
 
